@@ -43,7 +43,10 @@ int main(int argc,char* argv[]){
             afterRollExit = 1;
             break;
         }
-
+        if (readbuffer == "-offnb") {
+            NoticeBoxMode = 0;
+            break;
+        }
         cout << "Unknown Parameter :  " << readbuffer << endl;
     }
 

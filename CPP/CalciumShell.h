@@ -26,7 +26,12 @@ void OpenCaShell(){
     getline(cin,usertypebuffer);
 
     if (SizeRead(usertypebuffer,4) == "-ca "){
-        readbuffer = cutlineblockA(usertypebuffer," ",2);
+        ReadScript = 1;
+        if (charTotal(usertypebuffer, "\"") != 2) {
+            NoticeBox("Command Format :  -ca \"Example.ca\" .  Run Script", " \"-ca\"  Help");
+            goto BackShell;
+        }
+        readbuffer = PartRead(usertypebuffer,"\"","\"");
         if (check_file_existence(readbuffer)){
             numbuffer = rollscript(readbuffer);
             if (numbuffer == 1001){

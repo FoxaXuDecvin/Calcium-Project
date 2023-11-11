@@ -15,39 +15,41 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Cpp\CalciumKernel.h">
+    <ResourceCompile Include="VS2022Proj.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\CPP\CalciumKernel.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Cpp\CalciumShell.h">
+    <ClInclude Include="..\CPP\CalciumShell.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Cpp\Includer.h">
+    <ClInclude Include="..\CPP\Includer.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Cpp\StringSpace.h">
+    <ClInclude Include="..\CPP\StringSpace.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Cpp\TextProces.h">
+    <ClInclude Include="..\CPP\TextProces.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Cpp\VarSpace.h">
+    <ClInclude Include="..\CPP\VarSpace.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Cpp\Verinfo.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="..\CPP\Verinfo.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Cpp\Calcium.cpp">
+    <ClCompile Include="..\CPP\Calcium.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="VS2022Proj.rc">
+    <None Include="..\CPP\ReadMe.md">
       <Filter>资源文件</Filter>
-    </ResourceCompile>
+    </None>
   </ItemGroup>
 </Project>

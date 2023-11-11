@@ -27,8 +27,6 @@ int checkCharA(string text,string chechchar ) {
 	}
 }
 
-
-
 string ReplaceCharA(string info, string replaceword, string nword) {
 	//cout << "New Replace :  _" << info << "_  _" << replaceword << "_  _" << nword << "_" << endl;
 	int checkanti = checkCharA(info, replaceword);
@@ -170,7 +168,6 @@ void varspacedelete(string VarHead) {
 	//cout << "Delete Var Space :  _" << VarHead << "_" << endl;
 
 	if (VarSpaceMax == 0) {
-		cout << "No any var is Set" << endl;
 		return;
 	}
 	int startReadVar = 2;
@@ -205,7 +202,6 @@ BackFoundLine:
 	startReadVar--;
 	//cout << "IF Command :  _" << to_string(startReadVar) << "_  . VMAX :  _" << to_string(VarSpaceMax) << "_" << endl;
 	if (startReadVar == VarSpaceMax) {
-		cout << "Var Not Found :  _" << VarHead << "_" << endl;
 		return;
 	}
 

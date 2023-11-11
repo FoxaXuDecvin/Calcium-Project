@@ -20,14 +20,20 @@ bool check_file_existence(const std::string& filename) {
     }
 }
 
-//Read Env
+//Read Env NEW
 string PartRead(string Info, string StartMark, string EndMark) {
 	int MaxInfoSize = Info.size();
 	int startmarkadd, endmarkadd,readptr;
 	string readbufferPR;
+	readptr = 0;
+
+	if (StartMark == "$FROMSTART$") {
+		startmarkadd = 0;
+		goto SKIPGETMARKSTART;
+	}
 
 	//GetStart
-	for (readptr = 0; readbufferPR != StartMark; readptr++) {
+	for (; readbufferPR != StartMark; readptr++) {
 		if (readptr > MaxInfoSize) {
 			return "sizeoutStart";
 		}
@@ -36,6 +42,7 @@ string PartRead(string Info, string StartMark, string EndMark) {
 	
 	startmarkadd = readptr;
 
+	SKIPGETMARKSTART:
 	readbufferPR = "";
 	//GetEnd
 	for (; readbufferPR != EndMark; readptr++) {
@@ -47,7 +54,7 @@ string PartRead(string Info, string StartMark, string EndMark) {
 
 	endmarkadd = readptr;
 
-	cout << "Start :  " << startmarkadd << "  End :  " << endmarkadd << endl;
+	//cout << "Start :  " << startmarkadd << "  End :  " << endmarkadd << endl;
 
 	//Start Process CMD
 
@@ -310,16 +317,14 @@ string ReplaceChar(string info, string replaceword, string nword) {
 	}
 }
 
-void coutll(){
-	if (ListWARNING == 0){
-		cout << "-----------------------------WARNING------------------------------" <<endl;
-		ListWARNING = 1;
+void NoticeBox(string info,string title){
+	if (NoticeBoxMode == 0) {
 		return;
 	}
 	else {
-		cout << "-------------------------------END--------------------------------" <<endl;
-		cout <<endl;
-		ListWARNING = 0;
+		cout << "-----------------------------" << title << "------------------------------" << endl;
+		cout << info << endl;
+		cout << "-------------------------------END--------------------------------" << endl;
 		return;
 	}
 	return;
@@ -336,11 +341,29 @@ int SpawnRandomNum(int min, int max) {
 
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> dis(min, max); // ����i-a֮����������
+	std::uniform_int_distribution<> dis(min, max); // Missing
 	int outdata = dis(gen);
 	
 	//string dis_str = to_string(dis(gen));
 	//MessageBox(0,dis_str.c_str(),"Bug check",MB_OK);
 	
 	return dis(gen);
+}
+
+string CODETRANS(string INFO) {
+	INFO = ReplaceChar(INFO, "\\1", "!");
+	INFO = ReplaceChar(INFO, "\\2", "@");
+	INFO = ReplaceChar(INFO, "\\3", "#");
+	INFO = ReplaceChar(INFO, "\\4", "$");
+	INFO = ReplaceChar(INFO, "\\5", "%");
+	INFO = ReplaceChar(INFO, "\\6", "^");
+	INFO = ReplaceChar(INFO, "\\7", "&");
+	INFO = ReplaceChar(INFO, "\\8", "*");
+	INFO = ReplaceChar(INFO, "\\9", "(");
+	INFO = ReplaceChar(INFO, "\\0", ")");
+	INFO = ReplaceChar(INFO, "\\y", "\"");
+	INFO = ReplaceChar(INFO, "\\d", "");
+	INFO = ReplaceChar(INFO, "(OF)", "");
+	INFO = ReplaceChar(INFO, "\\\\", "\\");
+	return INFO;
 }

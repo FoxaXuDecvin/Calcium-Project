@@ -127,20 +127,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Cpp\CalciumKernel.h" />
-    <ClInclude Include="..\..\Cpp\CalciumShell.h" />
-    <ClInclude Include="..\..\Cpp\Includer.h" />
-    <ClInclude Include="..\..\Cpp\StringSpace.h" />
-    <ClInclude Include="..\..\Cpp\TextProces.h" />
-    <ClInclude Include="..\..\Cpp\VarSpace.h" />
-    <ClInclude Include="..\..\Cpp\Verinfo.h" />
-    <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\Cpp\Calcium.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="VS2022Proj.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\CPP\CalciumKernel.h" />
+    <ClInclude Include="..\CPP\CalciumShell.h" />
+    <ClInclude Include="..\CPP\Includer.h" />
+    <ClInclude Include="..\CPP\StringSpace.h" />
+    <ClInclude Include="..\CPP\TextProces.h" />
+    <ClInclude Include="..\CPP\VarSpace.h" />
+    <ClInclude Include="..\CPP\Verinfo.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\CPP\Calcium.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\CPP\ReadMe.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
