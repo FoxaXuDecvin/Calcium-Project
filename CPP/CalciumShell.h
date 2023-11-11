@@ -13,10 +13,10 @@ void OpenCaShell(){
     cout << endl;
     cout << "Calcium Shell console" <<endl;
     cout << "Calcium version :  " << CodeName << " " << Str_VerCode << "." << endl;
-    cout << "Version Info :     " << VerNotice << endl;
+    cout << "Notice Update:     " << VerNotice << endl;
     cout << "Run Platfom  :  " << RunPlatfom << endl;
     cout << "Command Shell. Seed :  " << randsize << endl;
-    cout << "Copyright FoxaXu Software@. " << endl;
+    cout << "Copyright FoxaXu Software@. " << YearInfo << endl;
     cout << "Try to use Command :  \"help\" to get more info. or use \"endscript\" to exit" <<endl;
     cout << "Github :  https://github.com/FoxaXuDecvin/Calcium-Project" << endl;
     cout << endl;
