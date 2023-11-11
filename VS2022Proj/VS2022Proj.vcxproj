@@ -134,9 +134,13 @@
     <ClInclude Include="..\..\Cpp\TextProces.h" />
     <ClInclude Include="..\..\Cpp\VarSpace.h" />
     <ClInclude Include="..\..\Cpp\Verinfo.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Cpp\Calcium.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="VS2022Proj.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
