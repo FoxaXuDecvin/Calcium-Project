@@ -1,5 +1,6 @@
 #pragma once
 #include"TextProces.h"
+#include"CASK.h"
 
 int CMDCore();
 
@@ -52,7 +53,11 @@ int CMDCore(){
     cmdbuffer = TransVar(cmdbuffer);
 
     //cout << "After Trans CMD BUFFER :  _" << cmdbuffer << "_" << endl;
-
+    if (cmdbuffer == "") {
+        //EmptyShell
+        return 0;
+        }
+        
         if(SizeRead(cmdbuffer,8)=="#Calcium"){
             //Calcium Sign Mark
             return 0;
@@ -79,7 +84,9 @@ int CMDCore(){
                 return 0;
             }
             readbuffer = PartRead(cmdbuffer,"\"","\"");
-            system(readbuffer.c_str());
+            readbuffer = CODETRANS(readbuffer);
+            numbuffer = system(readbuffer.c_str());
+            VarExtendAPI = to_string(numbuffer);
             return 0;
         }
         if (SizeRead(cmdbuffer,4)=="stop"){
@@ -164,7 +171,7 @@ int CMDCore(){
             varspacedelete(readbufferCMDVAR);
             numbufferA = varspaceadd(readbufferCMDVAR, VarExtendAPI);
             if (numbuffer == 1) {
-                NoticeBox("Var :  " + readbuffer + "  Create Failed", "ERROR");
+                NoticeBox("Var :  \"" + readbufferCMDVAR + "\" Data :  _" + VarExtendAPI + "_,   Create Failed", "ERROR");
                 return 0;
             }
             return 0;
@@ -203,6 +210,7 @@ int CMDCore(){
             }
             if (checkChar(cmdbuffer, "=") == 0) {
                 readbufferB = PartRead(cmdbuffer, "&", "&");
+                //No ParaMode
                 if (readbufferB == "noticebox") {
                     VarExtendAPI = to_string(NoticeBoxMode);
                     return 0;
@@ -211,7 +219,14 @@ int CMDCore(){
                     VarExtendAPI = to_string(VerCode);
                     return 0;
                 }
-
+                if (readbufferB == "getsys") {
+                    VarExtendAPI = SocketAPI_GETSYS();
+                    return 0;
+                }
+                if (readbufferB == "getpath") {
+                    VarExtendAPI = SocketAPI_GETPATH();
+                    return 0;
+                }
                 goto UNKNOWNSAPI;
             }
             if (charTotal(cmdbuffer, "\"") != 2) {
@@ -220,8 +235,8 @@ int CMDCore(){
             }
             readbufferB = PartRead(cmdbuffer, "&", "&");//VarName
             readbufferA = PartRead(cmdbuffer, "\"", "\"");//Var CharInfo
-            //cout << "SOCKETAPI A  " << readbufferB << endl;
-            //cout << "SOCKETAPI B " << readbufferA << endl;
+            
+            //SOCKET API - ARGV MODE
             if (readbufferB == "noticebox") {
                 if (readbufferA == "1") {
                     NoticeBoxMode = 1;
@@ -238,6 +253,7 @@ int CMDCore(){
                 NoticeBox("Socket.API.Error:UnsupportType ->  NoticeBoxMode", "Socket.Api.Error");
                 return 0;
             }
+
 
             //Unknown Socket API
             UNKNOWNSAPI:
