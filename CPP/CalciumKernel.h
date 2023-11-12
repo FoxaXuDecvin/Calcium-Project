@@ -53,11 +53,41 @@ int CMDCore(){
     cmdbuffer = TransVar(cmdbuffer);
 
     //cout << "After Trans CMD BUFFER :  _" << cmdbuffer << "_" << endl;
-    if (cmdbuffer == "") {
-        //EmptyShell
-        return 0;
+        if (cmdbuffer == "") {
+             //EmptyShell
+             return 0;
         }
-        
+
+        //IF
+        if (SizeRead(cmdbuffer, 2) == "if") {
+            //
+            if (checkChar(cmdbuffer, "(") == 1) {
+                if (checkChar(cmdbuffer, ")") == 1) {
+                    //Rule True
+                    readbuffer = PartRead(cmdbuffer, "(", ")");
+                    readbuffer = CODETRANS(readbuffer);
+
+                    //RunCommand
+                    VarExtendAPI = "";
+                    cmdbuffer = readbuffer;
+                    CMDCore();
+                    if (VarExtendAPI == "true") {
+                        //RunCommand Box
+                    }
+                    if (VarExtendAPI == "false") {
+                        return 0;
+                    }
+
+                    NoticeBox("If Command error  ->  Return Data Null", "ERROR");
+                    return 0;
+                }
+            }
+            
+            NoticeBox("If Command error  ->  Format Error","ERROR");
+            return 0;
+        }
+
+        //OS
         if(SizeRead(cmdbuffer,8)=="#Calcium"){
             //Calcium Sign Mark
             return 0;

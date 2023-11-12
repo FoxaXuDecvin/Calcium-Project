@@ -1,0 +1,150 @@
+Calcium Command Format(CCF)
+Version 1.0
+
+Copyright FoxaXu Software
+
+基于 Calcium Spark 编写的 CCF 规范
+
+该版本适用于几乎所有的Calcium Spark范围内的版本
+
+
+1.替代字符
+由于存在检测字符，我们设置了替换字符
+以下字符为检测字符
+ && 
+ ()
+ ""
+ ;
+
+如果你想在文本中使用这些字符
+请用以下转换字符
+      "\1"  ->  "!"
+      "\2"  ->  "@"      
+      "\3"  ->  "#"      
+      "\4"  ->  "$"      
+      "\5"  ->  "%"      
+      "\6"  ->  "^"      
+      "\7"  ->  "&"      
+      "\8"  ->  "*"      
+      "\9"  ->  "("      
+      "\0"  ->  ")"      
+      "\y"  ->  "\""      
+      "\d"  ->  ""      
+      "(OF)"  ->  ""      [(OF为空字符)使用请写作 \9OF\0 , 如果你的文本存在这些字符，请进行以下操作  D:\MSVC\114514 -> Replace : D:\MSVC\\9OF\0114514 ];
+      "\\"  ->  "\"      
+
+另外，受ReadEngine配置
+请不要定义或使用以下字符
+ReadFailed
+overline
+
+此字符被用作标记，如果直接写入文本会触发对应功能引起不必要麻烦
+
+
+2.指令
+Kernel指令
+不包括额外的 Include
+
+#Calcium  ->  声明头，不影响指令执行
+$$        ->  指令注释，不影响指令执行
+
+#Include  ->  基于C++，该指令用于加载其他Calcium程序，（头文件）
+
+
+cout -> {
+    cout 用作输出信息
+    
+    输出任何内容
+    如果其中存在变量则会输出变量内容
+
+    格式
+    cout "<INFO>";
+}
+
+system -> {
+    执行系统自带的 Command
+    Windows 为 CMD
+    Linux 为 Terminal
+
+    格式
+
+    system("<INFO>");
+}
+
+stop   -> {
+    类似于 Windows 的pause
+    但是只支持按 Enter
+    
+    格式
+
+    stop; (输出默认)
+    stop("<INFO>"); (输入INFO的内容)
+}
+
+endscript ->  {
+    结束脚本
+    用于脚本末尾
+    声明脚本执行完毕
+    退出脚本
+}
+
+list  -> {
+    list 为工具
+    可在Script模式下使用
+    但 List 是为Shell调试设计
+    
+    格式
+
+    list "<COMMAND>";
+
+    其中
+    <COMMAND> 可以为 "vp" (VarSpace);
+                     "nb" (NoticeBoxMode);
+
+    如果使用不存在的 COMMAND ， 会返回ERROR
+}
+
+goto -> {
+    goto 标记工具
+    例子:
+
+    #Calcium
+
+    cout "Hello World";
+
+    goto ":END";
+
+    cout "What Happend";
+
+    :END
+
+    cout "Hello My name is FoxaXu";
+
+    endscript;
+
+    那将会输出 
+    Hello World
+    Hello My name is FoxaXu
+
+    goto不支持在Shell中使用
+    指令头为 ":" 的指令都将被识别为GOTO的标记
+
+    GOTO 的标记符号不能存在空格，否则会抛出 Mark Not Found,解决方法将空格添加到 Goto 的指令中
+    例如
+
+    goto "    :END";
+
+    格式
+
+    goto "<MARK>";
+}
+
+
+
+3.变量
+
+var  -> {
+    格式
+    var 
+}
+
