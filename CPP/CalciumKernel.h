@@ -87,6 +87,25 @@ int CMDCore(){
             return 0;
         }
 
+        if (SizeRead(cmdbuffer, 2) == "cp") {
+            if (charTotal(cmdbuffer, "\"") != 4) {
+                NoticeBox("Comparison Error -> Format Error", "ERROR");
+                return 0;
+            }
+            readbufferA = PartReadA(cmdbuffer, "\"", "\"", 1);
+            readbufferB = PartReadA(cmdbuffer, "\"", "\"", 2);
+           // cout << "A : " << readbufferA << "   B : " << readbufferB << endl;
+            if (readbufferA == readbufferB) {
+                VarExtendAPI = "true";
+            }
+            else {
+                VarExtendAPI = "false";
+            }
+
+            //R
+            return 0;
+        }
+
         //OS
         if(SizeRead(cmdbuffer,8)=="#Calcium"){
             //Calcium Sign Mark

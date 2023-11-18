@@ -73,6 +73,12 @@ void OpenCaShell(){
         cout << "Info :  https://calcium.foxaxu.com" << endl;
         goto BackShell;
     }
+    if (usertypebuffer == "testchar") {
+        readbuffer = "\"1\"\"2\"\"3\"\"4\"";
+        readbufferA = PartReadA(readbuffer, "\"", "\"", 4);
+        cout << readbufferA << endl;
+        goto BackShell;
+    }
 
     cmdbuffer = usertypebuffer;
     numbuffer = CMDCore();
