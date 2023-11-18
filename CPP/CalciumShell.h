@@ -75,7 +75,7 @@ void OpenCaShell(){
     }
     if (usertypebuffer == "testchar") {
         readbuffer = "\"1\"\"2\"\"3\"\"4\"";
-        readbufferA = PartReadA(readbuffer, "\"", "\"", 4);
+        readbufferA = PartReadA(readbuffer, "\"", "\"", 1);
         cout << readbufferA << endl;
         goto BackShell;
     }

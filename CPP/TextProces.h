@@ -70,61 +70,72 @@ string PartRead(string Info, string StartMark, string EndMark) {
 
 //Read Env NEW PART
 //Use StartMark
-string PartReadA(string Info, string StartMark, string EndMark,int PartSizeA) {
-	PartSizeA = PartSizeA-- * 2;
-	int MaxInfoSize = Info.size();
-	int startmarkadd, endmarkadd, readptr;
-	string readbufferPR;
-	readptr = 0;
+string PartReadA(string Info, string StartMark, string EndMark,int RPartSizeA) {
+	int MAXSIZEA = Info.size();
+	int numbufferB, numbufferC,readptr = 0, PartSizeA;
+	PartSizeA = RPartSizeA;
+	string readbufferC, readbufferD, tempInfo;
+	int cbuffer = 0;
 
+	int getStart, getEnd , getcurrent = 0;
 
-	BACKPSA:
-	if (StartMark == "$FROMSTART$") {
-		startmarkadd = readptr;
-		goto SKIPGETMARKSTART;
+	//FindStart
+	if (StartMark == EndMark) {
+		PartSizeA = PartSizeA * 2;
+		PartSizeA--;
+		PartSizeA--;
 	}
+
+	while (PartSizeA != getcurrent) {
+		for (; readbufferC != StartMark; readptr++) {
+			readbufferC = Info[readptr];
+			if (readbufferC == StartMark) {
+				getcurrent++;
+			}
+			//cout << "Read :  " << readptr << "Data :  " << readbufferC << endl;
+			if (readptr > MAXSIZEA)return "pra.failed mark";
+		}
+		
+		//cout << "A :  " << readbufferC << "  B :  " << getcurrent << endl;
+		readbufferC = "";
+	}
+	//cout << "Start :  " << readptr << "  PartSA :  " << PartSizeA << endl;
 
 	//GetStart
-	for (; readbufferPR != StartMark; readptr++) {
-		if (readptr > MaxInfoSize) {
+	for (; readbufferD != StartMark; readptr++) {
+		if (readptr > MAXSIZEA) {
 			return "sizeoutStart";
 		}
-		readbufferPR = Info[readptr];
+		readbufferD = Info[readptr];
 	}
 
-	startmarkadd = readptr;
+	getStart = readptr;
 
 SKIPGETMARKSTART:
-	readbufferPR = "";
+	readbufferD = "";
 	//GetEnd
-	for (; readbufferPR != EndMark; readptr++) {
-		if (readptr > MaxInfoSize) {
+	for (; readbufferD != EndMark; readptr++) {
+		if (readptr > MAXSIZEA) {
 			return "sizeoutEnd";
 		}
-		readbufferPR = Info[readptr];
+		readbufferD = Info[readptr];
 	}
 
-	endmarkadd = readptr;
+	getEnd = readptr;
 
-	PartSizeA--;
-	if (PartSizeA != 0) {
-		startmarkadd = endmarkadd = 0;
-		goto BACKPSA;
-	}
 	//cout << "Start :  " << startmarkadd << "  End :  " << endmarkadd << endl;
 
 	//Start Process CMD
 
-	//cout << "BACK SIZE :  " << startmarkadd << "  END :  " << endmarkadd << endl;
-
 	//ReadPTR
-	readbufferPR = "";
-	endmarkadd--;
-	for (readptr = startmarkadd; readptr != endmarkadd; readptr++) {
-		readbufferPR = readbufferPR + Info[readptr];
+	readbufferD = "";
+	getEnd--;
+	for (readptr = getStart; readptr != getEnd; readptr++) {
+		readbufferD = readbufferD + Info[readptr];
 	}
 
-	return readbufferPR;
+	return readbufferD;
+
 }
 
 
