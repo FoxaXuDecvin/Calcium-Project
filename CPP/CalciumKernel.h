@@ -57,10 +57,18 @@ int CMDCore(){
              //EmptyShell
              return 0;
         }
+        if (SizeRead(cmdbuffer, 1) == "{") {
+            //EmptyShell
+            return 0;
+        }
+        if (SizeRead(cmdbuffer, 1) == "}") {
+            //EmptyShell
+            return 0;
+        }
 
         //IF
         if (SizeRead(cmdbuffer, 2) == "if") {
-            //
+            //Run if Else
             if (checkChar(cmdbuffer, "(") == 1) {
                 if (checkChar(cmdbuffer, ")") == 1) {
                     //Rule True
@@ -73,14 +81,78 @@ int CMDCore(){
                     CMDCore();
                     if (VarExtendAPI == "true") {
                         //RunCommand Box
-                    }
-                    if (VarExtendAPI == "false") {
-                        //FIND ELSE
+                        getFsize = FindCharLine(ReadScript, RunScript, "{");
+                        if (getFsize == -4) {
+                            NoticeBox("If Error -> No Mark", "ERROR");
+                        }
+                        getFsize++;
+
+                        getESize = FindCharLine(ReadScript, RunScript, "}");
+                        if (getFsize == -4) {
+                            NoticeBox("If Error -> No Mark", "ERROR");
+                        }
+                        
+                        while (true) {
+                            if (getFsize == getESize)break;
+                            readbufferA = LineReader(RunScript, getFsize);
+                            readbufferA = CODETRANS(readbufferA);
+                            cmdbuffer = readbufferA;
+                            numbufferA = CMDCore();
+
+                            if (numbufferA == -1) {
+                                return -1;
+                            }
+                            getFsize++;
+                        }
+                        readbufferA = LineReader(RunScript, getESize);
+                        
+                        //cout << "END : " << ReadScript << endl;
+                        if (checkChar(readbufferA,"}else{") == 1) {
+                            getESize++;
+                            getESize = FindCharLine(getESize, RunScript, "}");
+                            if (getFsize == -4) {
+                                NoticeBox("If Error -> No Mark", "ERROR");
+                            }
+                            ReadScript = getESize;
+                            ReadScript++;
+                            //cout << "2END : " << ReadScript << endl;
+                        }
+                        ReadScript = getESize;
                         return 0;
                     }
 
-                    NoticeBox("If Command error  ->  Return Data Null", "ERROR");
-                    return 0;
+                    if (VarExtendAPI == "false") {
+                        //FIND ELSE
+                        //RunCommand Box
+                        getFsize = FindCharLine(ReadScript, RunScript, "}else{");
+                        if (getFsize == -4) {
+                            NoticeBox("If Error -> No Mark", "ERROR");
+                        }
+                        getFsize++;
+
+                        getESize = FindCharLine(ReadScript, RunScript, "}");
+                        if (getFsize == -4) {
+                            NoticeBox("If Error -> No Mark", "ERROR");
+                        }
+
+                        while (true) {
+                            if (getFsize == getESize)break;
+                            readbufferA = LineReader(RunScript, getFsize);
+                            readbufferA = CODETRANS(readbufferA);
+                            cmdbuffer = readbufferA;
+                            numbufferA = CMDCore();
+
+                            if (numbufferA == -1) {
+                                return -1;
+                            }
+                            getFsize++;
+                        }
+                        readbufferA = LineReader(RunScript, getESize);
+
+                        //cout << "END : " << ReadScript << endl;
+                        ReadScript = getESize;
+                        return 0;
+                    }
                 }
             }
             
@@ -144,7 +216,7 @@ int CMDCore(){
         if (SizeRead(cmdbuffer,6)=="system"){
             //Win/Linux Console Command
             if (charTotal(cmdbuffer,"\"") != 2){
-                NoticeBox("Script Exception. Line: " + to_string(ScriptLine) + " . Cout Command Error :   TOO MANY QUOTATION", "ERROR");
+                NoticeBox("Script Exception. Line: " + to_string(ScriptLine) + "(Buffer :  " + to_string(ReadScript) + ").Cout Command Error : TOO MANY QUOTATION", "ERROR");
                 return 0;
             }
             readbuffer = PartRead(cmdbuffer,"\"","\"");
@@ -422,6 +494,6 @@ int CMDCore(){
             }
             return 0;
         }
-        NoticeBox("Script Exception. Line: " + to_string(ScriptLine) + " . Unknown Command :   -" + cmdbuffer + "-\n" + "    -In File :  _" + RunScript + "_ -","ERROR");
+        NoticeBox("Script Exception. Line: " + to_string(ScriptLine) + "(Buffer :  " + to_string(ReadScript) + ") . Unknown Command :   -" + cmdbuffer + "-\n" + "    -In File :  _" + RunScript + "_ -","ERROR");
         return 0;
 }

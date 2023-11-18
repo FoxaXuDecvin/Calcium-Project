@@ -452,3 +452,19 @@ string CODETRANS(string INFO) {
 	INFO = ReplaceChar(INFO, "\\\\", "\\");
 	return INFO;
 }
+
+// -4 == Not Found
+int FindCharLine(int startline,string file, string charData) {
+	while (true) {
+		readbufferA = LineReader(file, startline);
+		readbufferA = HeadSpaceCleanA(readbufferA);
+		if (readbufferA == "overline") {
+			return -4;
+		}
+
+		if (checkChar(readbufferA, charData) == 1) {
+			return startline;
+		}
+		startline++;
+	}
+}

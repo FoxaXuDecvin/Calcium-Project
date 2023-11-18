@@ -40,5 +40,7 @@ int NoticeBoxMode = 1; // 1 - Output  0 - Close All Output
 
 int ReadScript = 0;
 
+int getFsize, getESize;
+
 //Text
 string YearInfo = "2022-2023";
