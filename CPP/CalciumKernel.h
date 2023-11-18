@@ -75,6 +75,7 @@ int CMDCore(){
                         //RunCommand Box
                     }
                     if (VarExtendAPI == "false") {
+                        //FIND ELSE
                         return 0;
                     }
 
@@ -118,7 +119,21 @@ int CMDCore(){
         if(SizeRead(cmdbuffer,4)=="cout"){
             //Output Text
             if (charTotal(cmdbuffer,"\"") != 2){
-                NoticeBox("Script Exception. Line: " + to_string(ScriptLine) + " . Cout Command Error :   QUOTATION FORMAT ERROR", "ERROR");
+                //Command Mode
+                readbufferA = PartRead(cmdbuffer, "t", ";");//VarCMD
+                readbufferA = HeadSpaceCleanA(readbufferA);
+
+                //Clean VarAPI
+                VarExtendAPI = "null";
+                readbufferA = CODETRANS(readbufferA);
+                cmdbuffer = readbufferA;
+                numbufferA = CMDCore();
+
+                if (numbufferA == -1) {
+                    return -1;
+                }
+
+                cout << VarExtendAPI << endl;
                 return 0;
             }
             readbuffer = PartRead(cmdbuffer,"\"","\"");
@@ -164,28 +179,51 @@ int CMDCore(){
         //Var
         if (SizeRead(cmdbuffer,3)=="var"){
             //Create VarSpace
-            if(charTotal(cmdbuffer,"&")!=2){
-                NoticeBox("Script Exception.Line: " + to_string(ScriptLine) + ".Create Var Error : SORT FORMAT ERROR", "ERROR");
-                return 0;
-            }
+            int RunMode = 0;
             if(charTotal(cmdbuffer,"\"")!=2){
-                NoticeBox("Script Exception. Line: " + to_string(ScriptLine) + " . Create Var Error :   SORT FORMAT ERROR", "ERROR");
+                RunMode = 1;
+            }
+            ResVarp = PartRead(rescmdbuffer,"r","=");//VarName
+            ResVarp = HeadSpaceCleanA(ResVarp);
+
+            //Command Mode
+            if (RunMode == 1) {
+                readbufferA = PartReadA(cmdbuffer, "=", ";",1);//VarCMD
+                readbufferA = HeadSpaceCleanA(readbufferA);
+
+                //Clean VarAPI
+                VarExtendAPI = "null";
+                readbufferA = CODETRANS(readbufferA);
+                cmdbuffer = readbufferA;
+                numbufferA = CMDCore();
+
+                if (numbufferA == -1) {
+                    return -1;
+                }
+
+                varspacedelete(ResVarp);
+                numbufferA = varspaceadd(ResVarp, VarExtendAPI);
+                if (numbufferA == 1) {
+                    NoticeBox("Var :  \"" + readbufferB + "\" Data :  _" + VarExtendAPI + "_,   Create Failed", "ERROR");
+                    return 0;
+                }
                 return 0;
             }
-            readbufferB = PartRead(rescmdbuffer,"&","&");//VarName
+            //Command ENd
+
             readbufferA = PartRead(cmdbuffer,"\"","\"");//Var CharInfo
             //cout << "Create VarSpace  " << readbufferB << endl;
             //cout << "Create VarSpace Info  " << readbufferA << endl;
-            varspacedelete(readbufferB);
-            numbuffer = varspaceadd(readbufferB,readbufferA);
+            varspacedelete(ResVarp);
+            numbuffer = varspaceadd(ResVarp,readbufferA);
             if (numbuffer == 1){
-                NoticeBox("Var :  " + readbuffer + "  Create Failed","ERROR");
+                NoticeBox("Var :  " + ResVarp + "  Create Failed","ERROR");
                 return 0;
             }
             return 0;
         }
         if (SizeRead(cmdbuffer,6)=="delete"){
-            readbufferA = PartRead(rescmdbuffer,"&","&");//Delvarname
+            readbufferA = PartRead(rescmdbuffer," ",";");//Delvarname
             varspacedelete(readbufferA);
             return 0;
         }
@@ -253,12 +291,9 @@ int CMDCore(){
 
         if (SizeRead(cmdbuffer, 10) == "socket.api") {
             //Copy VAR
-            if (charTotal(cmdbuffer, "&") != 2) {
-                NoticeBox("Script Exception.Line: " + to_string(ScriptLine) + ".Socket API Error : SORT FORMAT ERROR", "ERROR");
-                return 0;
-            }
+            readbufferB = PartRead(cmdbuffer, " ", "=");
             if (checkChar(cmdbuffer, "=") == 0) {
-                readbufferB = PartRead(cmdbuffer, "&", "&");
+                readbufferB = PartRead(cmdbuffer, " ", ";");
                 //No ParaMode
                 if (readbufferB == "noticebox") {
                     VarExtendAPI = to_string(NoticeBoxMode);
@@ -282,7 +317,6 @@ int CMDCore(){
                 NoticeBox("Script Exception. Line: " + to_string(ScriptLine) + " . Socket API Error :   SORT FORMAT ERROR", "ERROR");
                 return 0;
             }
-            readbufferB = PartRead(cmdbuffer, "&", "&");//VarName
             readbufferA = PartRead(cmdbuffer, "\"", "\"");//Var CharInfo
             
             //SOCKET API - ARGV MODE

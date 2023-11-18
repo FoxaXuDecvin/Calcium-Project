@@ -341,6 +341,30 @@ string HeadSpaceClean(string Info) {
 	return tempInfo;
 }
 
+string HeadSpaceCleanA(string Info) {
+	int maxCSize = Info.size();
+	string readMCS, tempInfo;
+	int currentFit;
+
+	//cout << "Max C Size :  _" << maxCSize << endl;
+	for (currentFit = 0; currentFit < maxCSize; currentFit++) {
+		readMCS = Info[currentFit];
+		//cout << "Read MCS :  _" << readMCS << endl;
+		if (readMCS == " ") {}
+		else {
+			while (currentFit < maxCSize) {
+				//cout << "Trans Add : _" << Info[currentFit] << endl;
+				tempInfo = tempInfo + Info[currentFit];
+				if (tempInfo == " ") {
+					return tempInfo;
+				}
+				currentFit++;
+			}
+		}
+	}
+	return tempInfo;
+}
+
 int charTotal(string info,string markchar){
 	int charsize = info.size();
 	int totalget = 0;
@@ -421,6 +445,7 @@ string CODETRANS(string INFO) {
 	INFO = ReplaceChar(INFO, "\\8", "*");
 	INFO = ReplaceChar(INFO, "\\9", "(");
 	INFO = ReplaceChar(INFO, "\\0", ")");
+	INFO = ReplaceChar(INFO, "\\f", ";");
 	INFO = ReplaceChar(INFO, "\\y", "\"");
 	INFO = ReplaceChar(INFO, "\\d", "");
 	INFO = ReplaceChar(INFO, "(OF)", "");

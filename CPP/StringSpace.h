@@ -13,6 +13,7 @@ string readbufferCMDVAR;
 
 string cmdbuffer;
 string rescmdbuffer;
+string ResVarp;
 
 
 string resinclude;
