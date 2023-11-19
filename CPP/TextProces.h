@@ -10,6 +10,9 @@ using namespace std;
 // Text command Process
 // Cpp Includer
 
+//DEFIND
+int checkChar(string text, string chechchar);
+
 //Only Support Read 1 Char Size,Read Size A"B$C "+$ = B
 bool check_file_existence(const std::string& filename) {
     std::ifstream file(filename);
@@ -22,6 +25,7 @@ bool check_file_existence(const std::string& filename) {
 
 //Read Env NEW
 string PartRead(string Info, string StartMark, string EndMark) {
+	clmSpace();
 	int MaxInfoSize = Info.size();
 	int startmarkadd, endmarkadd,readptr;
 	string readbufferPR;
@@ -71,10 +75,16 @@ string PartRead(string Info, string StartMark, string EndMark) {
 //Read Env NEW PART
 //Use StartMark
 string PartReadA(string Info, string StartMark, string EndMark,int RPartSizeA) {
+	//Anti Search All
+	clmSpace();
+	readbufferA = StartMark + EndMark;
+	if (checkChar(Info, readbufferA) == 1) {
+		return "";
+	}
+
 	int MAXSIZEA = Info.size();
-	int numbufferB, numbufferC,readptr = 0, PartSizeA;
+	int readptr = 0;
 	PartSizeA = RPartSizeA;
-	string readbufferC, readbufferD, tempInfo;
 	int cbuffer = 0;
 
 	int getStart, getEnd , getcurrent = 0;
@@ -142,6 +152,7 @@ SKIPGETMARKSTART:
 //ReadSize
 // FoxaXu good work 3 = Fox
 string SizeRead(string Info, int Size) {
+	clmSpace();
 	if (Size > Info.size()) {
 		return "SizeRead.OverSize";
 	}
@@ -157,6 +168,7 @@ string SizeRead(string Info, int Size) {
 //Read Size from End
 // This is FoxaXu 4=xaXu
 string EndSizeRead(string Info, int LateSize) {
+	clmSpace();
 	int InfoSize = Info.size();
 	int EndAddress = InfoSize - LateSize;
 	if (EndAddress < 0) {
@@ -175,6 +187,7 @@ string EndSizeRead(string Info, int LateSize) {
 //Get Char Address int
 // ABC$DEFG$
 int TextGetSizeAddress(string Info, string MarkSize, int NumBit) {
+	clmSpace();
 	int MaxSizeInfo = Info.size();
 	int CurrentNumBit = 0;
 	int StartRead = 0;
@@ -193,6 +206,7 @@ int TextGetSizeAddress(string Info, string MarkSize, int NumBit) {
 //Char Size Read
 //Example ABCDEFG S=C E=F DE
 string PartReadSize(string Info, int StartSize, int EndSize) {
+	clmSpace();
 	StartSize--; EndSize--;
 	int MaxInfoSize = Info.size();
 	if (StartSize > EndSize) {
@@ -250,6 +264,7 @@ int CountLines(string filename)
 //
 //      LineReader(ExampleFile,3) return FOXAXU
 string LineReader(string File, int line_number) {
+	clmSpace();
 	int lines, i = 0;
 	string temp;
 	fstream file;
@@ -466,6 +481,7 @@ string CODETRANS(string INFO) {
 
 // -4 == Not Found
 int FindCharLine(int startline,string file, string charData) {
+	clmSpace();
 	while (true) {
 		readbufferA = LineReader(file, startline);
 		readbufferA = HeadSpaceCleanA(readbufferA);

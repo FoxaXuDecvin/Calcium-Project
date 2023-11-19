@@ -4,6 +4,10 @@ using namespace std;
 
 //PUBLIC API
 
+//HEAD
+string TransVar(string Info);
+
+//
 string VarSpace = "varspace;";
 int VarSpaceMax;
 
@@ -95,6 +99,12 @@ NextRollCR:
 // 1 - Error
 int varspaceadd(string VarHead, string varinfo) {
 	VarHead = ReplaceCharA(VarHead, " ","");
+
+	readbufferA = TransVar(VarHead);
+	if (readbufferA == varinfo) {
+		//cout << "NO EDIT" << endl;
+		return 0;
+	}
 
 	if (varinfo == "") {
 		varinfo = "NULL";

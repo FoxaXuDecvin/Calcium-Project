@@ -42,5 +42,18 @@ int ReadScript = 0;
 
 int getFsize, getESize;
 
+//Base
+int numbufferC, PartSizeA;
+string readbufferC, readbufferD, tempInfo;
+
 //Text
 string YearInfo = "2022-2023";
+
+void clmSpace(void) {
+	readbuffer = readbufferA = readbufferB = readbufferCMDVAR = "";
+	numbufferC = PartSizeA = 0;
+    readbufferC = readbufferD = tempInfo = "";
+	sizebuffer = numbuffer = numbufferA = numbufferB = 0;
+	getFsize = getESize = 0;
+	return;
+}

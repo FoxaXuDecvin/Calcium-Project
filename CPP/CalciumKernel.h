@@ -190,9 +190,14 @@ int CMDCore(){
         }
         if(SizeRead(cmdbuffer,4)=="cout"){
             //Output Text
-            if (charTotal(cmdbuffer,"\"") != 2){
+            if (charTotal(cmdbuffer, "(") + charTotal(cmdbuffer, ")") >= 2){
                 //Command Mode
-                readbufferA = PartRead(cmdbuffer, "t", ";");//VarCMD
+                if (charTotal(cmdbuffer, "(") + charTotal(cmdbuffer, ")") >= 2) {}
+                else{
+                    NoticeBox("cout Format Error, Add (MESSAGE)", "ERROR");
+                    return 0;
+                }
+                readbufferA = PartRead(cmdbuffer, "(", ")");//VarCMD
                 readbufferA = HeadSpaceCleanA(readbufferA);
 
                 //Clean VarAPI
@@ -206,6 +211,10 @@ int CMDCore(){
                 }
 
                 cout << VarExtendAPI << endl;
+                return 0;
+            }
+            if (charTotal(cmdbuffer, "\"") != 2) {
+                NoticeBox("Cout Format Error -> Use \"MESSAGE \"", "ERROR");
                 return 0;
             }
             readbuffer = PartRead(cmdbuffer,"\"","\"");
@@ -251,17 +260,29 @@ int CMDCore(){
         //Var
         if (SizeRead(cmdbuffer,3)=="var"){
             //Create VarSpace
+            clmSpace();
             int RunMode = 0;
-            if(charTotal(cmdbuffer,"\"")!=2){
+            if (charTotal(cmdbuffer, "(") + charTotal(cmdbuffer, ")") >= 2) {
                 RunMode = 1;
             }
-            ResVarp = PartRead(rescmdbuffer,"r","=");//VarName
+            ResVarp = PartRead(rescmdbuffer," ","=");//VarName
             ResVarp = HeadSpaceCleanA(ResVarp);
+            varspacedelete(ResVarp);
 
             //Command Mode
             if (RunMode == 1) {
-                readbufferA = PartReadA(cmdbuffer, "=", ";",1);//VarCMD
+                if(charTotal(cmdbuffer,"(") + charTotal(cmdbuffer,")") >= 2){}
+                else {
+                    NoticeBox("var create failed. -> Please Use (Command)", "ERROR");
+                    return 0;
+                }
+                readbufferA = PartRead(cmdbuffer, "(", ")");//VarCMD
+                //cout << "COMMAND : " << readbufferA << "            CMDBUFF :  " << cmdbuffer << endl;
                 readbufferA = HeadSpaceCleanA(readbufferA);
+                if (readbufferA == "") {
+                    NoticeBox("var create failed. -> Unsupport Type", "ERROR");
+                    return 0;
+                }
 
                 //Clean VarAPI
                 VarExtendAPI = "null";
@@ -273,7 +294,6 @@ int CMDCore(){
                     return -1;
                 }
 
-                varspacedelete(ResVarp);
                 numbufferA = varspaceadd(ResVarp, VarExtendAPI);
                 if (numbufferA == 1) {
                     NoticeBox("Var :  \"" + readbufferB + "\" Data :  _" + VarExtendAPI + "_,   Create Failed", "ERROR");
@@ -282,12 +302,17 @@ int CMDCore(){
                 return 0;
             }
             //Command ENd
+            if (charTotal(cmdbuffer, "\"") != 2) {
+                NoticeBox("var create failed. -> Please Use \"Message\"", "ERROR");
+                return 0;
+            }
 
             readbufferA = PartRead(cmdbuffer,"\"","\"");//Var CharInfo
             //cout << "Create VarSpace  " << readbufferB << endl;
             //cout << "Create VarSpace Info  " << readbufferA << endl;
             varspacedelete(ResVarp);
             numbuffer = varspaceadd(ResVarp,readbufferA);
+            clmSpace();
             if (numbuffer == 1){
                 NoticeBox("Var :  " + ResVarp + "  Create Failed","ERROR");
                 return 0;
@@ -360,7 +385,8 @@ int CMDCore(){
             NoticeBox("Script Exception. Line: " + to_string(ScriptLine) + " . List Tool Error :   No This Select", "ERROR");
             return 0;
         }
-
+        
+        //API
         if (SizeRead(cmdbuffer, 10) == "socket.api") {
             //Copy VAR
             readbufferB = PartRead(cmdbuffer, " ", "=");
@@ -415,7 +441,11 @@ int CMDCore(){
             NoticeBox("Unknown Socket API ->  " + readbufferB, "Socket.Api.Error");
             return 0;
         }
+        if (SizeRead(cmdbuffer, 3) == "box") {
 
+        }
+
+        //END
         if (SizeRead(cmdbuffer, 4) == "goto") {
             //Press Enter to continue
             if (charTotal(cmdbuffer, "\"") != 2) {
@@ -494,6 +524,9 @@ int CMDCore(){
             }
             return 0;
         }
+        
+        //UnknownCOMMAND
         NoticeBox("Script Exception. Line: " + to_string(ScriptLine) + "(Buffer :  " + to_string(ReadScript) + ") . Unknown Command :   -" + cmdbuffer + "-\n" + "    -In File :  _" + RunScript + "_ -","ERROR");
+        VarExtendAPI = "cmderr";
         return 0;
 }
