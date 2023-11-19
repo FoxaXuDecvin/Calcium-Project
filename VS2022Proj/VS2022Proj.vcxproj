@@ -130,6 +130,8 @@
     <ResourceCompile Include="VS2022Proj.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\CPP\BOXAPI_NET_LUX.h" />
+    <ClInclude Include="..\CPP\BOXAPI_NET_WIN.h" />
     <ClInclude Include="..\CPP\CalciumKernel.h" />
     <ClInclude Include="..\CPP\CalciumShell.h" />
     <ClInclude Include="..\CPP\CASK.h" />

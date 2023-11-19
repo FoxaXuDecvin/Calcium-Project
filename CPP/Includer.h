@@ -20,11 +20,10 @@ const int DEFC_SHORT_1 = 250;
 // Windows/Linux Include API
 
 //Windows
-#include<Windows.h> 
-#include<direct.h>
+#include"BOXAPI_NET_WIN.h"
 
 //Linux
-//#include<unistd.h>  
+//#include"BOXAPI_NET_LUX.h"  
 
 //This is Include Part For Calcium Run Platfom
 //Copyright FoxaXu

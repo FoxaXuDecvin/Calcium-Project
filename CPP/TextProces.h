@@ -76,10 +76,8 @@ string PartRead(string Info, string StartMark, string EndMark) {
 //Use StartMark
 string PartReadA(string Info, string StartMark, string EndMark,int RPartSizeA) {
 	//Anti Search All
-	clmSpace();
-	readbufferA = StartMark + EndMark;
-	if (checkChar(Info, readbufferA) == 1) {
-		return "";
+	if (RPartSizeA == 1) {
+		return PartRead(Info, StartMark, EndMark);
 	}
 
 	int MAXSIZEA = Info.size();
@@ -120,6 +118,7 @@ string PartReadA(string Info, string StartMark, string EndMark,int RPartSizeA) {
 	}
 
 	getStart = readptr;
+	//cout << "Start Mark : " << getStart << endl;
 
 SKIPGETMARKSTART:
 	readbufferD = "";
@@ -133,7 +132,7 @@ SKIPGETMARKSTART:
 
 	getEnd = readptr;
 
-	//cout << "Start :  " << startmarkadd << "  End :  " << endmarkadd << endl;
+	//cout << "Start :  " << getStart<< "  End :  " << getEnd << endl;
 
 	//Start Process CMD
 

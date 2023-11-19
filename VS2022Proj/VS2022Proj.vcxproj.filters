@@ -44,6 +44,12 @@
     <ClInclude Include="..\CPP\CASK.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\CPP\BOXAPI_NET_WIN.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CPP\BOXAPI_NET_LUX.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CPP\Calcium.cpp">

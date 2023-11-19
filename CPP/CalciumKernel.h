@@ -167,7 +167,7 @@ int CMDCore(){
             }
             readbufferA = PartReadA(cmdbuffer, "\"", "\"", 1);
             readbufferB = PartReadA(cmdbuffer, "\"", "\"", 2);
-           // cout << "A : " << readbufferA << "   B : " << readbufferB << endl;
+            //cout << "A : " << readbufferA << "   B : " << readbufferB << endl;
             if (readbufferA == readbufferB) {
                 VarExtendAPI = "true";
             }
@@ -442,7 +442,48 @@ int CMDCore(){
             return 0;
         }
         if (SizeRead(cmdbuffer, 3) == "box") {
+            readbufferB = PartRead(cmdbuffer, "&", "&");
+            if (readbufferB == "calcium.version") {
+                VarExtendAPI = to_string(VerCode);
+                return 0;
+            }
+            if (readbufferB == "calcium.version.codename") {
+                VarExtendAPI = CodeName;
+                return 0;
+            }
+            if (readbufferB == "calcium.version.vernotice") {
+                VarExtendAPI = VerNotice;
+                return 0;
+            }
+            if(readbufferB == "calcium.version.runplatfom") {
+                VarExtendAPI = RunPlatfom;
+                return 0;
+            }
 
+
+
+        }
+        if (SizeRead(cmdbuffer, 7) == "URLDown") {
+            if (charTotal(cmdbuffer, "\"") != 4) {
+                NoticeBox("URLDown Failed -> Format Error", "ERROR");
+                return 0;
+            }
+            readbufferA = CODETRANS(PartReadA(cmdbuffer, "\"", "\"", 1));
+            readbufferB = CODETRANS(PartReadA(cmdbuffer, "\"", "\"", 2));
+            cout << "Request Internet Download :" << endl;
+            cout << "URL :  " << readbufferA << endl;
+            cout << "Save :  " << readbufferB << endl;
+            numbufferA = URLDown(readbufferA, readbufferB);
+
+            if (numbufferA == 1) {
+                VarExtendAPI = "true";
+                return 0;
+            }
+            else {
+                NoticeBox("Internet Error - > URLDown Failed", "DownloadFailed");
+                VarExtendAPI = "false";
+                return 0;
+            }
         }
 
         //END
