@@ -136,6 +136,7 @@
     <ClInclude Include="..\CPP\CalciumShell.h" />
     <ClInclude Include="..\CPP\CASK.h" />
     <ClInclude Include="..\CPP\Includer.h" />
+    <ClInclude Include="..\CPP\NetworkFrame.h" />
     <ClInclude Include="..\CPP\StringSpace.h" />
     <ClInclude Include="..\CPP\TextProces.h" />
     <ClInclude Include="..\CPP\VarSpace.h" />

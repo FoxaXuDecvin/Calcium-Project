@@ -149,3 +149,4 @@ var  -> {
     var <变量> = <内容或指令>
 }
 
+cout (box &geturlcode& (https://cn.bing.com/search?q=c%2B%2B+import&cvid=a33c8d966c5c4c36990e4411b274ac48&gs_lcrp=EgZjaHJvbWUqBggAEAAYQDIGCAAQABhAMgYIARAAGEAyBggCEAAYQDIGCAMQABhAMgYIBBAAGEAyBggFEAAYQDIGCAYQABhAMgYIBxAAGEAyBggIEAAYQNIBCDI5NzhqMGo0qAIAsAIA&FORM=ANAB01&PC=U531));

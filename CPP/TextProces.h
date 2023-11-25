@@ -39,6 +39,7 @@ string PartRead(string Info, string StartMark, string EndMark) {
 	//GetStart
 	for (; readbufferPR != StartMark; readptr++) {
 		if (readptr > MaxInfoSize) {
+			//cout << "Message :  " << Info << endl;
 			return "sizeoutStart";
 		}
 		readbufferPR = Info[readptr];
@@ -263,7 +264,9 @@ int CountLines(string filename)
 //
 //      LineReader(ExampleFile,3) return FOXAXU
 string LineReader(string File, int line_number) {
-	clmSpace();
+	if (check_file_existence(File)) {}else {
+		return "Failed File not Exist :  " + File;
+	}
 	int lines, i = 0;
 	string temp;
 	fstream file;
@@ -492,5 +495,66 @@ int FindCharLine(int startline,string file, string charData) {
 			return startline;
 		}
 		startline++;
+	}
+}
+
+string GetURLCode(string URL) {
+	//SpawnRandNum
+	string tempcreatefile = "geturlcode~" + to_string(SpawnRandomNum(1, 10000)) + ".tmp";
+	bool tmp = URLDown(URL, tempcreatefile);
+	readbufferCMDVAR = LineReader(tempcreatefile, 1);
+	//cout << "Remove :  " << tempcreatefile << endl;
+	remove(tempcreatefile.c_str());
+
+	if (tmp) {
+		return readbufferCMDVAR;
+	}
+	else {
+		cout << "GetURLCode Error :  URL -> " << URL << endl;
+		cout << "TempFile :  ->  " << readbufferCMDVAR << endl;
+		return "URLError.FailedGet";
+	}
+}
+
+void loadcfg(void) {
+	//cout << "Load Config" << endl;
+RELOADLCFG:
+	int readptr = 1;
+	if (check_file_existence(cfgfile)) {
+		while (true) {
+			readptr++;
+			string tempptr = LineReader(cfgfile, readptr);
+			if (tempptr == "ReadFailed") {
+				cout << "Failed to Load Config" << endl;
+				cout << "Try to delete :  " << cfgfile << "  and try again" << endl;
+				break;
+			}
+			if (tempptr == "overline")break;
+			readbufferA = PartRead(tempptr, "$", "=");
+
+			//cout << "Read Up :  Line " << readptr << "   INFO :  _" << tempptr << "_" << endl;
+			
+			if (readbufferA == "settings.autoupdate") {
+				cfg_autoupdate = PartRead(tempptr, "=", ";");
+				continue;
+			}
+
+			if (tempptr == "")break;
+			cout << "Load Config Error :  Unknown Config :  _" << tempptr << "_" << endl;
+			continue;
+		}
+
+		//cout << "SAU = " << cfg_autoupdate << endl;
+		return;
+
+	}
+	//Create Config
+	else {
+		ofstream CreateConfig;
+		CreateConfig.open(cfgfile);
+		CreateConfig << "Calcium Config. Create Version -> " << Str_VerCode << endl;
+		CreateConfig << "$settings.autoupdate=true;//AutoUpdate" << endl;
+		CreateConfig.close();
+		goto RELOADLCFG;
 	}
 }

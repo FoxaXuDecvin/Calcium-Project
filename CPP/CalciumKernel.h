@@ -443,24 +443,14 @@ int CMDCore(){
         }
         if (SizeRead(cmdbuffer, 3) == "box") {
             readbufferB = PartRead(cmdbuffer, "&", "&");
-            if (readbufferB == "calcium.version") {
-                VarExtendAPI = to_string(VerCode);
-                return 0;
-            }
-            if (readbufferB == "calcium.version.codename") {
-                VarExtendAPI = CodeName;
-                return 0;
-            }
-            if (readbufferB == "calcium.version.vernotice") {
-                VarExtendAPI = VerNotice;
-                return 0;
-            }
-            if(readbufferB == "calcium.version.runplatfom") {
-                VarExtendAPI = RunPlatfom;
+            if (readbufferB == "geturlcode") {
+                readbufferA = PartRead(cmdbuffer, "\"", "\"");//URL
+                VarExtendAPI = GetURLCode(readbufferA);
                 return 0;
             }
 
-
+            NoticeBox("Box Command Error -> Unknown Type :  " + readbufferB + ".", "ERROR");
+            return 0;
 
         }
         if (SizeRead(cmdbuffer, 7) == "URLDown") {

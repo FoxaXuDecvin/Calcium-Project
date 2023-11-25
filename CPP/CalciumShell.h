@@ -2,6 +2,7 @@
 #include"Includer.h"
 #include"Verinfo.h"
 #include"CalciumKernel.h"
+#include"NetworkFrame.h"
 
 using namespace std;
 
@@ -10,15 +11,33 @@ string usertypebuffer;
 int randsize = SpawnRandomNum(1,99999999);
 
 void OpenCaShell(){
+    cout << "Calcium Shell Loading... " << endl;
+    readbufferA = checkupdate();
     cout << endl;
-    cout << "Calcium Shell console" <<endl;
+    cout << "Calcium Shell console. Platfom :  " << RunPlatfom <<endl;
     cout << "Calcium version :  " << CodeName << " " << Str_VerCode << "." << endl;
-    cout << "Notice Update:     " << VerNotice << endl;
-    cout << "Run Platfom  :  " << RunPlatfom << endl;
-    cout << "Command Shell. Seed :  " << randsize << endl;
+    cout << "Version Code:     " << VerNotice << endl;
+    cout << "File Path :  " << GetFilePath() << endl;
+    cout << "Run Path :  " << SocketAPI_GETPATH() << endl;
+    cout << "Using Config :  " << cfgfile << endl;
     cout << "Copyright FoxaXu Software@. " << YearInfo << endl;
-    cout << "Try to use Command :  \"help\" to get more info. or use \"endscript\" to exit" <<endl;
+    cout << "Command :  \"help\" to get more info. or use \"endscript\" to exit" <<endl;
     cout << "Github :  https://github.com/FoxaXuDecvin/Calcium-Project" << endl;
+    cout << endl;
+    if (readbufferA == "-2") {
+        cout << "Failed to Check Update. Please check your internet. Your Version is :  " << Str_VerCode << endl;
+    }
+    else {
+        if (readbufferA == "-1") {
+            cout << "No any Update was found.Your Version is :  " << Str_VerCode << endl;
+        }
+        if (readbufferA == "-3") {
+            cout << "Update is Disabled.Your Version is :  " << Str_VerCode << endl;
+        }
+        else {
+            cout << "It`s time to Update your calcium version. New Version :  " << readbufferA << "   is Release Now" << endl;
+        }
+    }
     cout << endl;
     BackShell:
     cout << endl;

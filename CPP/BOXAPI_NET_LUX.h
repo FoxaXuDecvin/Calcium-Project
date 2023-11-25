@@ -132,3 +132,40 @@ int URLDown(string URL, string Save) {
 		return 0;
 	}
 }
+
+//GetFilePath
+// Resource File
+string GetFilePath(void) {
+	char szBuf[250];
+	char szPath[250];
+
+	memset(szBuf, 0x00, sizeof(szBuf));
+	memset(szPath, 0x00, sizeof(szPath));
+
+	getcwd(szBuf, sizeof(szBuf) - 1);
+	//printf("buf:%s\n", szBuf);
+
+	int ret = readlink("/proc/self/exe", szPath, sizeof(szPath) - 1);
+	//printf("ret:%d\n", ret);
+	//printf("path:%s\n", szPath);
+
+	string ReplaceChar(string info, string replaceword, string nword);
+	string DATA = ReplaceChar(szPath,"\\","/");
+
+    string tempdata,outdata;
+    int numbuffer = DATA.size();
+    int baseNum=-1;
+
+    while(true){
+        tempdata = DATA[numbuffer];
+        if (tempdata == "/") break;
+        numbuffer--;
+    }
+    numbuffer--;
+    while(baseNum != numbuffer){
+        baseNum++;
+        outdata = outdata + DATA[baseNum];
+    };
+
+	return outdata;
+}

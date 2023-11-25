@@ -4,12 +4,13 @@
 using namespace std;
 
 int main(int argc,char* argv[]){
+    loadcfg();
     if(argc == 1){
-        cout << "Calcium Run Platfom. " << CodeName << " " << Str_VerCode <<endl;
         OpenCaShell();
         cout << endl;
         return 1;
     }
+
     paragetsize = 0;
     charnxmark = 0;
     cout << endl;

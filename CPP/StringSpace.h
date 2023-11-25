@@ -1,5 +1,6 @@
 #pragma once
 #include"TextProces.h"
+#include"Verinfo.h"
 
 //Includer Var Space
 
@@ -21,6 +22,11 @@ string resinclude;
 string RunScript = "NULL";
 
 string VarExtendAPI;
+
+//NET API
+const string NETUpdateAPI = "https://calciumservices.foxaxu.com/UpdateAPI/index.txt";
+
+//END
 
 int sizebuffer;
 int numbuffer,numbufferA, numbufferB;
@@ -57,3 +63,9 @@ void clmSpace(void) {
 	getFsize = getESize = 0;
 	return;
 }
+
+//LoadConfig
+string GetFilePath(void);
+const string cfgfile = GetFilePath() + "/Calcium~Config.cfg";
+
+string cfg_autoupdate;
