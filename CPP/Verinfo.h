@@ -6,11 +6,11 @@
 using namespace std;
 
 string VersionCode = "Spark-Core_Developer_Preview";
-string CodeName = "SparkCore_Developer";
-string VerNotice = "SparkCore_Build_Stage_4";
+string CodeName = "SparkCore_Pre-Release";
+string VerNotice = "SparkCore_PreRelease";
 string RunPlatfom = "Windows (MSVC 64Bit)";//Must Include Windows/Linux one
 
-int VerCode = 4104;
+int VerCode = 4105;
 
 string Str_VerCode = to_string(VerCode);
 

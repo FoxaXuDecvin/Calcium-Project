@@ -466,6 +466,10 @@ int CMDCore(){
                 VarExtendAPI = GetURLCode(readbufferA);
                 return 0;
             }
+            if (readbufferB == "fileread") {
+                 VarExtendAPI = LineReader(PartReadA(cmdbuffer, "\"", "\"", 1),atoi(PartReadA(cmdbuffer, "\"", "\"", 2).c_str()));//URL
+                 return 0;
+            }
 
             NoticeBox("Box Command Error -> Unknown Type :  " + readbufferB + ".", "ERROR");
             return 0;
