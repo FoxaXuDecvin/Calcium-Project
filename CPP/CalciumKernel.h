@@ -385,11 +385,7 @@ int CMDCore(){
         }
         //Var -End
         if (SizeRead(cmdbuffer,4)=="list"){
-            if (charTotal(cmdbuffer, "\"") != 2) {
-                NoticeBox("Script Exception. Line: " + to_string(ScriptLine) + " . List Tool Error :   Format Error", "ERROR");
-                return 0;
-            }
-            readbufferA = PartRead(cmdbuffer, "\"", "\"");
+            readbufferA = PartRead(cmdbuffer, " ", "$FROMEND$");
             if (readbufferA == "vp") {
                 cout << "VarSpace. Size : " + to_string(VarSpaceMax) + " List ->" << endl;
                 cout << "---------------------------------------------------------------------" << endl;

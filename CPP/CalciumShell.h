@@ -46,13 +46,12 @@ void OpenCaShell(){
 
     if (SizeRead(usertypebuffer,4) == "-ca "){
         ReadScript = 1;
-        if (charTotal(usertypebuffer, "\"") != 2) {
-            NoticeBox("Command Format :  -ca \"Example.ca\" .  Run Script", " \"-ca\"  Help");
-            goto BackShell;
-        }
-        readbuffer = PartRead(usertypebuffer,"\"","\"");
+        readbuffer = PartRead(usertypebuffer," ","$FROMEND$");
+        readbuffer = ReplaceChar(readbuffer, "\"", "");
         if (check_file_existence(readbuffer)){
             numbuffer = rollscript(readbuffer);
+            VarSpace = "varspace;";
+            VarSpaceMax = 0;
             if (numbuffer == 1001){
                 //Return UnknownError
                 cout << "Script Return Error" << endl;
