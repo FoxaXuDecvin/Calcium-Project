@@ -221,6 +221,7 @@ BackFoundLine:
 }
 
 string TransVar(string Info) {
+	TransCheckAPI = 0;
 	backinfo = Info;
 
 	if (VarSpaceMax == 0) {
@@ -236,6 +237,10 @@ string TransVar(string Info) {
 		ReplaceCharX = ReplaceCharA(ReplaceCharX, "%eqbar%", "=");
 		ReplaceCharX = ReplaceCharA(ReplaceCharX, "%mnbar%", "$");
 
+		int checkChar(string text, string chechchar);
+		if (checkChar(backinfo, ResChar) == 1) {
+			TransCheckAPI = 1;
+		}
 		backinfo = ReplaceCharA(backinfo, ResChar, ReplaceCharX);
 	}
 

@@ -27,6 +27,7 @@ string VarExtendAPI;
 const string NETUpdateAPI = "https://calciumservices.foxaxu.com/UpdateAPI/index.txt";
 
 //END
+int TransCheckAPI = 0;
 
 int sizebuffer;
 int numbuffer,numbufferA, numbufferB;
@@ -60,7 +61,6 @@ void clmSpace(void) {
 	numbufferC = PartSizeA = 0;
     readbufferC = readbufferD = tempInfo = "";
 	sizebuffer = numbuffer = numbufferA = numbufferB = 0;
-	getFsize = getESize = 0;
 	return;
 }
 

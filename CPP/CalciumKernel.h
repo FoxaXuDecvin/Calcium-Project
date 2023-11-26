@@ -84,14 +84,18 @@ int CMDCore(){
                         getFsize = FindCharLine(ReadScript, RunScript, "{");
                         if (getFsize == -4) {
                             NoticeBox("If Error -> No Mark", "ERROR");
+                            return 0;
                         }
                         getFsize++;
 
                         getESize = FindCharLine(ReadScript, RunScript, "}");
-                        if (getFsize == -4) {
+                        if (getESize == -4) {
                             NoticeBox("If Error -> No Mark", "ERROR");
+                            return 0;
                         }
                         
+                        //RollCommand
+                        clmSpace();
                         while (true) {
                             if (getFsize == getESize)break;
                             readbufferA = LineReader(RunScript, getFsize);
@@ -112,10 +116,11 @@ int CMDCore(){
                             getESize = FindCharLine(getESize, RunScript, "}");
                             if (getFsize == -4) {
                                 NoticeBox("If Error -> No Mark", "ERROR");
+                                return 0;
                             }
                             ReadScript = getESize;
-                            ReadScript++;
                             //cout << "2END : " << ReadScript << endl;
+                            return 0;
                         }
                         ReadScript = getESize;
                         return 0;
@@ -126,13 +131,16 @@ int CMDCore(){
                         //RunCommand Box
                         getFsize = FindCharLine(ReadScript, RunScript, "}else{");
                         if (getFsize == -4) {
-                            NoticeBox("If Error -> No Mark", "ERROR");
+                            getFsize = FindCharLine(ReadScript, RunScript, "}");
+                            ReadScript = getFsize;
+                            return 0;
                         }
                         getFsize++;
 
                         getESize = FindCharLine(ReadScript, RunScript, "}");
                         if (getFsize == -4) {
                             NoticeBox("If Error -> No Mark", "ERROR");
+                            return 0;
                         }
 
                         while (true) {
@@ -165,15 +173,29 @@ int CMDCore(){
                 NoticeBox("Comparison Error -> Format Error", "ERROR");
                 return 0;
             }
-            readbufferA = PartReadA(cmdbuffer, "\"", "\"", 1);
-            readbufferB = PartReadA(cmdbuffer, "\"", "\"", 2);
+            readbufferA = CODETRANS(PartReadA(cmdbuffer, "\"", "\"", 1));
+            readbufferB = CODETRANS(PartReadA(cmdbuffer, "\"", "\"", 2));
+            //TransLate
             //cout << "A : " << readbufferA << "   B : " << readbufferB << endl;
-            if (readbufferA == readbufferB) {
-                VarExtendAPI = "true";
+            if (checkChar(cmdbuffer, "==") == 1) {
+                //Same
+                if (readbufferA == readbufferB) {
+                    VarExtendAPI = ca_true;
+                }
+                else {
+                    VarExtendAPI = ca_false;
+                }
             }
-            else {
-                VarExtendAPI = "false";
+            if (checkChar(cmdbuffer, "!=") == 1) {
+                //UnSame
+                if (readbufferA == readbufferB) {
+                    VarExtendAPI = ca_false;
+                }
+                else {
+                    VarExtendAPI = ca_true;
+                }
             }
+            
 
             //R
             return 0;

@@ -16,6 +16,9 @@
 #define DEF_SHORT_1 = 250;
 const int DEFC_SHORT_1 = 250;
 
+const string ca_true = "true";
+const string ca_false = "false";
+
 // Windows/Linux Include API
 
 //Auto Include
@@ -24,6 +27,6 @@ const int DEFC_SHORT_1 = 250;
 
 
 //This is Include Part For Calcium Run Platfom
-//Copyright FoxaXu
+//Copyright FoxaXu Software 2023@
 // Design By FoxaXu
 //Calcium is a Script Run Program

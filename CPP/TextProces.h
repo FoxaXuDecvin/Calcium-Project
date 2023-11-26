@@ -265,7 +265,7 @@ int CountLines(string filename)
 //      LineReader(ExampleFile,3) return FOXAXU
 string LineReader(string File, int line_number) {
 	if (check_file_existence(File)) {}else {
-		return "Failed File not Exist :  " + File;
+		return "FileNotExist";
 	}
 	int lines, i = 0;
 	string temp;
@@ -275,6 +275,8 @@ string LineReader(string File, int line_number) {
 
 	if (line_number <= 0)
 	{
+		cout << "File :  " << File << endl;
+		cout << "LineError :  " << line_number << endl;
 		return "LineError";
 	}
 	if (file.fail())
@@ -293,6 +295,8 @@ string LineReader(string File, int line_number) {
 	return temp;
 }
 
+//1 TRUE
+//0 FALSE
 int checkChar(string text,string chechchar ) {
 	const char* c = chechchar.c_str();
 
@@ -463,6 +467,8 @@ int SpawnRandomNum(int min, int max) {
 }
 
 string CODETRANS(string INFO) {
+	INFO = TransVar(INFO);
+
 	INFO = ReplaceChar(INFO, "\\1", "!");
 	INFO = ReplaceChar(INFO, "\\2", "@");
 	INFO = ReplaceChar(INFO, "\\3", "#");
@@ -483,15 +489,26 @@ string CODETRANS(string INFO) {
 
 // -4 == Not Found
 int FindCharLine(int startline,string file, string charData) {
-	clmSpace();
+	//cout << "GoRoll. in " << startline << endl;
 	while (true) {
+		//cout << "A" << endl;
 		readbufferA = LineReader(file, startline);
+		//cout << "B" << endl;
 		readbufferA = HeadSpaceCleanA(readbufferA);
+		//cout << "Roll :  " << startline << "  INFO :  " << readbufferA << endl;
 		if (readbufferA == "overline") {
+			return -4;
+		}
+		if (readbufferA == "LineError") {
+			return -4;
+		}
+		if (readbufferA == "FileNotExist") {
+			//cout << "File NULL" << endl;
 			return -4;
 		}
 
 		if (checkChar(readbufferA, charData) == 1) {
+			//cout << "EndRoll :  " << startline << endl;
 			return startline;
 		}
 		startline++;
