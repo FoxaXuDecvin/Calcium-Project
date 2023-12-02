@@ -40,7 +40,7 @@ string PartRead(string Info, string StartMark, string EndMark) {
 	for (; readbufferPR != StartMark; readptr++) {
 		if (readptr > MaxInfoSize) {
 			//cout << "Message :  " << Info << endl;
-			return "sizeoutStart";
+			return "notfoundstart :  " + Info;
 		}
 		readbufferPR = Info[readptr];
 	}
@@ -56,7 +56,7 @@ string PartRead(string Info, string StartMark, string EndMark) {
 	}
 	for (; readbufferPR != EndMark; readptr++) {
 		if (readptr > MaxInfoSize) {
-			return "sizeoutEnd";
+			return "notfoundEnd :  " + Info;
 		}
 		readbufferPR = Info[readptr];
 	}
@@ -578,5 +578,35 @@ RELOADLCFG:
 		CreateConfig << "$settings.autoupdate=true;//AutoUpdate" << endl;
 		CreateConfig.close();
 		goto RELOADLCFG;
+	}
+}
+
+string getendchar(string infos) {
+	numbuffer = infos.size();
+	readbuffer = infos[numbuffer];
+	return readbuffer;
+}
+
+string cutendchar(string infos) {
+	numbuffer = infos.size();
+	numbuffer--;
+	readbuffer = "";
+	for (int rptr = 0; rptr != numbuffer; rptr++) {
+		readbuffer = readbuffer + infos[rptr];
+	}
+	return readbuffer;
+}
+
+bool createmark(string File, string info) {
+	ofstream CMark;
+	CMark.open(File);
+	CMark << info << endl;
+	CMark.close();
+
+	if (check_file_existence(File)) {
+		return true;
+	}
+	else {
+		return false;
 	}
 }

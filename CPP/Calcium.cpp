@@ -8,7 +8,7 @@ int main(int argc,char* argv[]){
     if(argc == 1){
         OpenCaShell();
         cout << endl;
-        return 1;
+        return ReturnDATA;
     }
 
     paragetsize = 0;
@@ -80,5 +80,5 @@ int main(int argc,char* argv[]){
         cout << "Read Failed :  This File is Destroy." <<endl;
         cout << "File : " << RunScript << endl;
     }
-    return 0;
+    return ReturnDATA;
 }

@@ -17,3 +17,27 @@ string SocketAPI_GETPATH(void) {
 	getcwd(bufferC, DEFC_SHORT_1);
 	return bufferC;
 }
+
+bool ExistFolder_check(string dir) {
+	string tmpDoct = dir + pathsign + "test~" + to_string(SpawnRandomNum(1,999999)) + "~.mark";
+
+	if (createmark(tmpDoct, "nWn")) {
+		remove(tmpDoct.c_str());
+		return true;
+	}
+	else {
+		remove(tmpDoct.c_str());
+		return false;
+	}
+}
+
+bool boxrmdir(string dir) {
+	removeDirectoryAPIX(dir.c_str());
+
+	if (ExistFolder_check(dir)) {
+		return false;
+	}
+	else {
+		return true;
+	}
+}

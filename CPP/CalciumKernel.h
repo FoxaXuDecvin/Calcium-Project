@@ -275,8 +275,22 @@ int CMDCore(){
             }
         }
         if (SizeRead(cmdbuffer,9)=="endscript"){
+            if (charTotal(cmdbuffer, "<") + charTotal(cmdbuffer, ">") == 2) {
+                readbufferA = PartRead(cmdbuffer, "<", ">");
+                ReturnDATA = atoi(readbufferA.c_str());
+            }
             //Select End Task
             return -1;
+        }
+
+        if (SizeRead(cmdbuffer, 5) == "throw") {
+            if (charTotal(cmdbuffer, "<") + charTotal(cmdbuffer, ">") == 2) {
+                readbufferA = PartRead(cmdbuffer, "<", ">");
+                cout << "script.throw :  (" << readbufferA << ")" << endl;
+                return 0;
+            }
+            NoticeBox("Command Error ->.  Unknown Throw Code. Format :  throw<INFO>", "ERROR");
+            return 0;
         }
 
         //Var
@@ -460,7 +474,18 @@ int CMDCore(){
             return 0;
         }
         if (SizeRead(cmdbuffer, 3) == "box") {
-            readbufferB = PartRead(cmdbuffer, "&", "&");
+            if (checkChar(cmdbuffer, "=") == 1) {
+                if (checkChar(cmdbuffer, " =") == 1) {
+                    readbufferB = PartRead(cmdbuffer, " ", " ");
+                }
+                else {
+                    readbufferB = PartRead(cmdbuffer, " ", "=");
+                }
+            }
+            else {
+                readbufferB = PartRead(cmdbuffer, " ", "$FROMEND$");
+            }
+
             if (readbufferB == "geturlcode") {
                 readbufferA = PartRead(cmdbuffer, "\"", "\"");//URL
                 VarExtendAPI = GetURLCode(readbufferA);
@@ -471,7 +496,45 @@ int CMDCore(){
                  return 0;
             }
 
-            NoticeBox("Box Command Error -> Unknown Type :  " + readbufferB + ".", "ERROR");
+            if (readbufferB == "folder.remove") {
+                if (charTotal(cmdbuffer, "\"") != 2) {
+                    NoticeBox("Folder API Error. Format Error Using \"DIR\" ", "ERROR");
+                    return 0;
+                }
+
+                readbufferC = PartRead(cmdbuffer, "\"", "\"");
+
+                bool BACKDELAPI = boxrmdir(readbufferC);
+                if (BACKDELAPI) {
+                    VarExtendAPI = "true";
+                }
+                else {
+                    VarExtendAPI = "false";
+                }
+
+                return 0;
+            }
+
+            if (readbufferB == "folder.exist") {
+                if (charTotal(cmdbuffer, "\"") != 2) {
+                    NoticeBox("Folder API Error. Format Error Using \"DIR\" ", "ERROR");
+                    return 0;
+                }
+
+                readbufferC = PartRead(cmdbuffer, "\"", "\"");
+
+                bool fexst = ExistFolder_check(readbufferC);
+                if (fexst) {
+                    VarExtendAPI = "true";
+                }
+                else {
+                    VarExtendAPI = "false";
+                }
+
+                return 0;
+            }
+
+            NoticeBox("Box Command Error -> Unknown Type :  (" + readbufferB + ").", "ERROR");
             return 0;
 
         }
@@ -553,13 +616,13 @@ int CMDCore(){
         }
         //Include
 
-        if (SizeRead(cmdbuffer,8)=="#Include"){
+        if (SizeRead(cmdbuffer,8)=="#using"){
             readbufferA = PartRead(cmdbuffer,"\"","\"");
             readbufferA = ReplaceChar(readbufferA,"\";","");
 
             if(check_file_existence(readbufferA)){}
             else {
-                NoticeBox("Failed to Include :  _" + readbufferA + "_.\n" + "Please Check is file exist", "ERROR");
+                NoticeBox("Failed to Using :  _" + readbufferA + "_.\n" + "Please Check is file exist", "ERROR");
                 return 0;
             }
 
@@ -567,11 +630,11 @@ int CMDCore(){
                 int a = rollscript(readbufferA);
                 if (a == 1001){
                     //Return UnknownError
-                    NoticeBox("Include File Return Error","ERROR");
+                    NoticeBox("Using File Return Error","ERROR");
                 }
                 if (a == 1002){
                     //Return FileDestroy
-                    NoticeBox("Include Run Error\n Read Failed :  This File is Destroy.\nInclude File : _" + readbufferA + "_", "ERROR");
+                    NoticeBox("Using Run Error\n Read Failed :  This File is Destroy.\nInclude File : _" + readbufferA + "_", "ERROR");
                 }
                 break;
             }

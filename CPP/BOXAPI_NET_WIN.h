@@ -2,9 +2,11 @@
 #include<Windows.h> 
 #include<direct.h>
 #include <fstream>
-
+#include <io.h>
+#include <string>
+#include <vector>
 //Design For Windows
-
+const std::string pathsign = "\\";
 
 bool check_file_existenceA(const std::string& filename) {
 	std::ifstream file(filename);
@@ -66,4 +68,36 @@ string GetFilePath(void) {
 	(strrchr(szFilePath, '\\'))[0] = 0; // 删除文件名，只获得路径字串//
 	string path = szFilePath;
 	return path;
+}
+
+void getFiles(string& dataPath, vector<string>& files)
+{
+	long long hFile = 0;
+	struct _finddata_t fileinfo;
+	string p;
+	int i = 0;
+	if ((hFile = _findfirst(p.assign(dataPath).append("/*").c_str(), &fileinfo)) != -1)
+	{
+		do
+		{
+			if ((fileinfo.attrib & _A_SUBDIR))
+				continue;
+			else
+				files.push_back(p.assign(dataPath).append("/").append(fileinfo.name));
+		} while (_findnext(hFile, &fileinfo) == 0);
+		_findclose(hFile);
+	}
+}
+
+void removeDirectoryAPIX(string dirPath) {
+	vector<string> dirFileList;
+	getFiles(dirPath, dirFileList);  //读取所有文件
+	while (!dirFileList.empty())
+	{
+		string fileName = dirFileList.back(); //从后往前删除
+		DeleteFile(fileName.c_str()); //一个个删除子文件
+		dirFileList.pop_back();
+	}
+	RemoveDirectory(dirPath.c_str()); //删除文件夹，空文件夹才能用这个函数删除
+	//原文链接：https ://blog.csdn.net/zf0104/article/details/122454940
 }

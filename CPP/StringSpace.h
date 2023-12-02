@@ -43,6 +43,8 @@ int ScriptLine = 1;
 
 int ListWARNING = 0;
 
+int ReturnDATA = 0;
+
 int NoticeBoxMode = 1; // 1 - Output  0 - Close All Output
 
 int ReadScript = 0;
