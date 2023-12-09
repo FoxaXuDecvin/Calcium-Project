@@ -82,34 +82,51 @@ string GetFileName(void) {
 	return path;
 }
 
-void getFiles(string& dataPath, vector<string>& files)
-{
-	long long hFile = 0;
+void removeDirectoryAPIX(string dir) {
+	//在目录后面加上"\\*.*"进行第一次搜索
+	string newDir = dir + "\\*.*";
+	//用于查找的句柄
+	intptr_t handle;
 	struct _finddata_t fileinfo;
-	string p;
-	int i = 0;
-	if ((hFile = _findfirst(p.assign(dataPath).append("/*").c_str(), &fileinfo)) != -1)
-	{
-		do
-		{
-			if ((fileinfo.attrib & _A_SUBDIR))
-				continue;
-			else
-				files.push_back(p.assign(dataPath).append("/").append(fileinfo.name));
-		} while (_findnext(hFile, &fileinfo) == 0);
-		_findclose(hFile);
-	}
-}
+	//第一次查找
+	handle = _findfirst(newDir.c_str(), &fileinfo);
 
-void removeDirectoryAPIX(string dirPath) {
-	vector<string> dirFileList;
-	getFiles(dirPath, dirFileList);  //读取所有文件
-	while (!dirFileList.empty())
-	{
-		string fileName = dirFileList.back(); //从后往前删除
-		DeleteFile(fileName.c_str()); //一个个删除子文件
-		dirFileList.pop_back();
+	if (handle == -1) {
+		//cout << "无文件" << endl;
+		return;
 	}
-	RemoveDirectory(dirPath.c_str()); //删除文件夹，空文件夹才能用这个函数删除
-	//原文链接：https ://blog.csdn.net/zf0104/article/details/122454940
+
+	do
+	{
+		if (fileinfo.attrib & _A_SUBDIR) {//如果为文件夹，加上文件夹路径，再次遍历
+			if (strcmp(fileinfo.name, ".") == 0 || strcmp(fileinfo.name, "..") == 0)
+				continue;
+
+			// 在目录后面加上"\\"和搜索到的目录名进行下一次搜索
+			newDir = dir + "\\" + fileinfo.name;
+			removeDirectoryAPIX(newDir.c_str());//先遍历删除文件夹下的文件，再删除空的文件夹
+			//cout << newDir.c_str() << endl;
+			if (_rmdir(newDir.c_str()) == 0) {//删除空文件夹
+				//cout << "delete empty dir success" << endl;
+			}
+			else {
+				//cout << "delete empty dir error" << endl;
+			}
+		}
+		else {
+			string file_path = dir + "\\" + fileinfo.name;
+			//cout << file_path.c_str() << endl;
+			if (remove(file_path.c_str()) == 0) {//删除文件
+				//cout << "delete file success" << endl;
+			}
+			else {
+				//cout << "delete file error" << endl;
+			}
+		}
+	} while (!_findnext(handle, &fileinfo));
+
+	_findclose(handle);
+
+	rmdir(dir.c_str());
+	return;
 }

@@ -22,8 +22,8 @@ const string ca_false = "false";
 // Windows/Linux Include API
 
 //Auto Include
-//#include "BOXAPI_NET_WIN.h"
-#include "BOXAPI_NET_LUX.h"  
+#include "BOXAPI_NET_WIN.h"
+//#include "BOXAPI_NET_LUX.h"  
 
 
 //This is Include Part For Calcium Run Platfom

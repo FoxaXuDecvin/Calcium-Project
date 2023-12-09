@@ -51,6 +51,7 @@ int ReadScript = 0;
 
 int getFsize, getESize;
 
+int cfg_maxerror,now_error = 0;
 //Base
 int numbufferC, PartSizeA;
 string readbufferC, readbufferD, tempInfo;

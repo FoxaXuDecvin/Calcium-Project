@@ -420,8 +420,8 @@ int CMDCore(){
         
         //API
         if (SizeRead(cmdbuffer, 10) == "socket.api") {
+            string SA_INFO, SA_HEAD;
             //Copy VAR
-            readbufferB = PartRead(cmdbuffer, " ", "=");
             if (checkChar(cmdbuffer, "=") == 0) {
                 readbufferB = PartRead(cmdbuffer, " ", ";");
                 //No ParaMode
@@ -447,30 +447,31 @@ int CMDCore(){
                 NoticeBox("Script Exception. Line: " + to_string(ScriptLine) + " . Socket API Error :   SORT FORMAT ERROR", "ERROR");
                 return 0;
             }
-            readbufferA = PartRead(cmdbuffer, "\"", "\"");//Var CharInfo
             
+            SA_INFO = PartReadA(cmdbuffer, "\"", "\"",1);//Var CharInfo
+            SA_HEAD = PartRead(cmdbuffer, " ", "=");
+
             //SOCKET API - ARGV MODE
-            if (readbufferB == "noticebox") {
-                if (readbufferA == "1") {
+            if (SA_HEAD == "noticebox") {
+                if (SA_INFO == "1") {
                     NoticeBoxMode = 1;
                     VarExtendAPI = "ok";
                     return 0;
                 }
-                if (readbufferA == "0") {
+                if (SA_INFO == "0") {
                     NoticeBoxMode = 0;
                     VarExtendAPI = "ok";
                     return 0;
                 }
 
                 //Socket Failed
-                NoticeBox("Socket.API.Error:UnsupportType ->  NoticeBoxMode", "Socket.Api.Error");
+                NoticeBox("Socket.API.Error:UnsupportType ->  NoticeBoxMode : " + SA_INFO, "Socket.Api.Error");
                 return 0;
             }
 
-
             //Unknown Socket API
             UNKNOWNSAPI:
-            NoticeBox("Unknown Socket API ->  " + readbufferB, "Socket.Api.Error");
+            NoticeBox("Unknown Socket API ->  _" + readbufferB + "_", "Socket.Api.Error");
             return 0;
         }
         if (SizeRead(cmdbuffer, 3) == "box") {
@@ -564,6 +565,11 @@ int CMDCore(){
                 VarExtendAPI = "false";
                 return 0;
             }
+        }
+
+        if (SizeRead(cmdbuffer, 8) == "cleanram") {
+            clmSpace();
+            return 0;
         }
 
         //END

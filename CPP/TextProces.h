@@ -440,13 +440,22 @@ string ReplaceChar(string info, string replaceword, string nword) {
 
 void NoticeBox(string info,string title){
 	if (NoticeBoxMode == 0) {
-		return;
 	}
 	else {
 		cout << "-----------------------------" << title << "------------------------------" << endl;
 		cout << info << endl;
-		cout << "-------------------------------END--------------------------------" << endl;
-		return;
+		cout << "-------------------------------END--------------------------------. Total Error :  " << now_error <<endl;
+	}
+	if (now_error == cfg_maxerror) {
+		cout << endl;
+		cout << "Script Error over " << cfg_maxerror << "." << endl;
+		cout << "For anti crash. calcium stop running this script." << endl;
+		cout << "You can set config file :  settings.maxerror=-1 to void this tool" << endl;
+		cout << "Press Enter to Continue" << endl;
+		getchar();
+	}
+	if (title == "ERROR") {
+		now_error++;
 	}
 	return;
 }
@@ -560,6 +569,10 @@ RELOADLCFG:
 				cfg_autoupdate = PartRead(tempptr, "=", ";");
 				continue;
 			}
+			if (readbufferA == "settings.maxerror") {
+				cfg_maxerror = atoi(PartRead(tempptr, "=", ";").c_str());
+				continue;
+			}
 
 			if (tempptr == "")break;
 			cout << "Load Config Error :  Unknown Config :  _" << tempptr << "_" << endl;
@@ -576,6 +589,7 @@ RELOADLCFG:
 		CreateConfig.open(cfgfile);
 		CreateConfig << "Calcium Config. Create Version -> " << Str_VerCode << endl;
 		CreateConfig << "$settings.autoupdate=true;//AutoUpdate" << endl;
+		CreateConfig << "$settings.maxerror=64;//AutoUpdate" << endl;
 		CreateConfig.close();
 		goto RELOADLCFG;
 	}

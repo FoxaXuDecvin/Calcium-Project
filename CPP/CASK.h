@@ -32,7 +32,11 @@ bool ExistFolder_check(string dir) {
 }
 
 bool boxrmdir(string dir) {
+	dir = ReplaceChar(dir, "\\", "/");
+
 	removeDirectoryAPIX(dir.c_str());
+
+	//cout << "Remove Directory :  " << dir << endl;
 
 	if (ExistFolder_check(dir)) {
 		return false;
