@@ -173,6 +173,27 @@ string GetFilePath(void) {
 	return outdata;
 }
 
+string GetFileName(void) {
+	char szBuf[250];
+	char szPath[250];
+
+	memset(szBuf, 0x00, sizeof(szBuf));
+	memset(szPath, 0x00, sizeof(szPath));
+
+	getcwd(szBuf, sizeof(szBuf) - 1);
+	//printf("buf:%s\n", szBuf);
+
+	int ret = readlink("/proc/self/exe", szPath, sizeof(szPath) - 1);
+	//printf("ret:%d\n", ret);
+	//printf("path:%s\n", szPath);
+
+	string ReplaceChar(string info, string replaceword, string nword);
+	string DATA = ReplaceChar(szPath, "\\", "/");
+
+
+	return DATA;
+}
+
 bool removeDirectoryAPIX(const char* path) {
 	DIR* dir = opendir(path);
 	if (dir == nullptr) {

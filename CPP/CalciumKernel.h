@@ -476,10 +476,10 @@ int CMDCore(){
         if (SizeRead(cmdbuffer, 3) == "box") {
             if (checkChar(cmdbuffer, "=") == 1) {
                 if (checkChar(cmdbuffer, " =") == 1) {
-                    readbufferB = PartRead(cmdbuffer, " ", " ");
+                    readbufferB = PartReadA(cmdbuffer, " ", " ", 1);
                 }
                 else {
-                    readbufferB = PartRead(cmdbuffer, " ", "=");
+                    readbufferB = PartReadA(cmdbuffer, " ", "=", 1);
                 }
             }
             else {
@@ -531,6 +531,11 @@ int CMDCore(){
                     VarExtendAPI = "false";
                 }
 
+                return 0;
+            }
+
+            if (readbufferB == "getcaname") {
+                VarExtendAPI = GetFileName();
                 return 0;
             }
 
