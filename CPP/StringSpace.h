@@ -58,6 +58,11 @@ int getFsize, getESize;
 int cfg_maxerror,now_error = 0;
 //Base
 int numbufferC, PartSizeA;
+
+int shellmode = 0;
+
+int NowTao = 0;
+
 string readbufferC, readbufferD, tempInfo;
 
 //Text
@@ -77,3 +82,4 @@ const string cfgfile = GetFilePath() + "/Calcium~Config.cfg";
 
 string cfg_autoupdate;
 string cfg_defaultrun="notset";
+int cfg_maxusing = 0;

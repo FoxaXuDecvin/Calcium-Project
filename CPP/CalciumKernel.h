@@ -667,8 +667,19 @@ int CMDCore(){
                 NoticeBox("Failed to Using :  _" + UsingFile + "_.\n" + "Please Check is file exist", "ERROR");
                 return 0;
             }
-
+            
             while(true){
+                NowTao++;
+                //cout << "Current Now Tao :  " << NowTao << endl;
+                if (NowTao == cfg_maxusing) {
+                    cout << "Using Command Over Max :  " << cfg_maxusing << endl;
+                    cout << "This Settings Anti Stack overflow. You can set :  settings.cfg_maxusing=-1 to Close this tool" << endl;
+                    cout << "Press Enter to Continue " << endl;
+                    getchar();
+                }
+                string OldRunScript = RunScript;
+                int OldReadScript = ReadScript;
+                ReadScript = 1;
                 int a = rollscript(UsingFile);
                 if (a == 1001){
                     //Return UnknownError
@@ -678,6 +689,9 @@ int CMDCore(){
                     //Return FileDestroy
                     NoticeBox("Using Run Error\n Read Failed :  This File is Destroy.\nInclude File : _" + UsingFile + "_", "ERROR");
                 }
+                RunScript = OldRunScript;
+                ReadScript = OldReadScript;
+                //cout << "CURRENT :  " << RunScript << endl;
                 break;
             }
             return 0;

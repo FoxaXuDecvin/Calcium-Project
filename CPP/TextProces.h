@@ -591,6 +591,10 @@ RELOADLCFG:
 				cfg_defaultrun = PartRead(tempptr, "=", ";");
 				continue;
 			}
+			if (readbufferA == "settings.maxusing") {
+				cfg_maxusing = atoi(PartRead(tempptr, "=", ";").c_str());
+				continue;
+			}
 
 			if (tempptr == "")break;
 			cout << "Load Config Error :  Unknown Config :  _" << tempptr << "_" << endl;
@@ -607,8 +611,11 @@ RELOADLCFG:
 		CreateConfig.open(cfgfile);
 		CreateConfig << "Calcium Config. Create Version -> " << Str_VerCode << endl;
 		CreateConfig << "$settings.autoupdate=true;//AutoUpdate" << endl;
-		CreateConfig << "$settings.maxerror=64;//AutoUpdate" << endl;
-		CreateConfig << "$settings.defaultrun=notset;//AutoUpdate" << endl;
+		CreateConfig << "$settings.maxerror=64;//Max Allow Happend Error Using -1 to Close" << endl;
+		CreateConfig << "$settings.maxusing=64;//Max Allow using File. Using -1 to Close" << endl;
+
+		CreateConfig << "$settings.defaultrun=notset;//Auto Run Script When Calcium Run" << endl;
+		
 		CreateConfig.close();
 		goto RELOADLCFG;
 	}

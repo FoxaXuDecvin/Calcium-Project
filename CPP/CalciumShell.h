@@ -11,6 +11,7 @@ string usertypebuffer;
 int randsize = SpawnRandomNum(1,99999999);
 
 void OpenCaShell(){
+    shellmode = 1;
     cout << "Calcium Shell Loading... " << endl;
     readbufferA = checkupdate();
     cout << endl;
