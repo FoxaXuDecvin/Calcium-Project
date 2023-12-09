@@ -8,6 +8,10 @@
 
 const std::string pathsign = "/";
 
+void foldercreateapi(string dir) {
+	mkdir(dir.c_str(),0755);
+}
+
 //Notice
 //Use GCC Add Agrv :  -l curl
 //Example URLDown("https://res.foxaxu.com/softwarecdn/FXROOTCert.zip","FXROOTCERT.zip");

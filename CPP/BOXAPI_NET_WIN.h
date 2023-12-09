@@ -8,6 +8,10 @@
 //Design For Windows
 const std::string pathsign = "\\";
 
+void foldercreateapi(string dir) {
+	mkdir(dir.c_str());
+}
+
 bool check_file_existenceA(const std::string& filename) {
 	std::ifstream file(filename);
 	if (file.is_open()) {

@@ -49,7 +49,7 @@ bool boxrmdir(string dir) {
 bool boxmkdir(string dir) {
 	dir = ReplaceChar(dir, "\\", "/");
 
-	mkdir(dir.c_str());
+	foldercreateapi(dir.c_str());
 
 	//cout << "Remove Directory :  " << dir << endl;
 
