@@ -595,6 +595,10 @@ RELOADLCFG:
 				cfg_maxusing = atoi(PartRead(tempptr, "=", ";").c_str());
 				continue;
 			}
+			if (readbufferA == "settings.usingserver") {
+				cfg_usingserver = PartRead(tempptr, "=", ";");
+				continue;
+			}
 
 			if (tempptr == "")break;
 			cout << "Load Config Error :  Unknown Config :  _" << tempptr << "_" << endl;
@@ -613,7 +617,7 @@ RELOADLCFG:
 		CreateConfig << "$settings.autoupdate=true;//AutoUpdate" << endl;
 		CreateConfig << "$settings.maxerror=64;//Max Allow Happend Error Using -1 to Close" << endl;
 		CreateConfig << "$settings.maxusing=64;//Max Allow using File. Using -1 to Close" << endl;
-
+		CreateConfig << "$settings.usingserver=https://calciumservices.foxaxu.com/ExtendAPI/;//Max Allow using File. Using -1 to Close" << endl;
 		CreateConfig << "$settings.defaultrun=notset;//Auto Run Script When Calcium Run" << endl;
 		
 		CreateConfig.close();

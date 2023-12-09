@@ -45,6 +45,27 @@ int rollscript(string RollFile){
 
 }
 
+//Enabled Extend
+//0 - FAIL   1 -TRUE
+int StartExtend(string Head) {
+    readbufferA = Head;
+        cout << "Connect Server :  " << cfg_usingserver;
+        cout << "Try to Find :  " << readbufferA << endl;
+        readbufferB = GetURLCode(cfg_usingserver + readbufferA);
+
+        if (readbufferB != "URLError.FailedGet") {
+            if (URLDown(readbufferB, UsingPath + readbufferA)) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+        }
+        else {
+            return 0;
+        }
+}
+
 //Return 0 -ok
 //      -1 -AutoExit
 int CMDCore(){
@@ -653,8 +674,17 @@ int CMDCore(){
             }
             else {
                 if (charTotal(cmdbuffer, "<") + charTotal(cmdbuffer, ">") == 2) {
-                    UsingFile = PartRead(cmdbuffer, "<", ">");
-                    UsingFile = UsingPath + "/" + UsingFile;
+                    readbufferCMDVAR = PartRead(cmdbuffer, "<", ">");
+                    UsingFile = UsingPath + "/" + readbufferCMDVAR;
+                    if (!check_file_existence(UsingFile)) {
+                        if (StartExtend(readbufferCMDVAR) == 1) {
+                            cout << readbufferCMDVAR << "is Ready" << endl;
+                        }
+                        else {
+                            cout << "Failed to Download :  " << UsingFile << endl;
+                            return 0;
+                        }
+                    }
                 }
                 else {
                     NoticeBox("Failed to Using Command. Null File Mark", "ERROR");
@@ -697,6 +727,32 @@ int CMDCore(){
             return 0;
         }
         
+        if (SizeRead(cmdbuffer, 3) == "net") {
+            if (PartReadA(cmdbuffer, " ", " ", 1) == "using") {
+                if (StartExtend(PartReadA(cmdbuffer, "\"", "\"", 1)) == 1) {
+                    cout << PartReadA(cmdbuffer, "\"", "\"", 1) << "  is Ready" << endl;
+                    return 0;
+                }
+                else {
+                    cout << "Failed to Download :  " << PartReadA(cmdbuffer, "\"", "\"", 1) << endl;
+                    return 0;
+                }
+            }
+            if (PartReadA(cmdbuffer, " ", " ", 1) == "remove") {
+                readbufferC = UsingPath + PartReadA(cmdbuffer, "\"", "\"", 1);
+                //cout << "Remove :  " << readbufferC << endl;
+                if (check_file_existence(readbufferC)) {
+                    remove(readbufferC.c_str());
+                }
+                else {
+                    cout << "No This File" << endl;
+                }
+                return 0;
+            }
+            cout << "Unknown Net Command " << endl;
+            return 0;
+        }
+
         //UnknownCOMMAND
         NoticeBox("Script Exception. Line: " + to_string(ScriptLine) + "(Buffer :  " + to_string(ReadScript) + ") . Unknown Command :   -" + cmdbuffer + "-\n" + "    -In File :  _" + RunScript + "_ -","ERROR");
         VarExtendAPI = "cmderr";

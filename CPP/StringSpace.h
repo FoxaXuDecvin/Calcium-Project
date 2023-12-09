@@ -26,9 +26,9 @@ string VarExtendAPI;
 //NET API
 string GetFilePath(void);
 const string NETUpdateAPI = "https://calciumservices.foxaxu.com/UpdateAPI/index.txt";
-const string RunTime = GetFilePath() + "/CalciumRunTime";
-const string UsingPath = GetFilePath() + "/CalciumRunTime/Using";
-const string RunTemp = GetFilePath() + "/CalciumRunTime/Temp";
+const string RunTime = GetFilePath() + "/CalciumRunTime/";
+const string UsingPath = GetFilePath() + "/CalciumRunTime/Using/";
+const string RunTemp = GetFilePath() + "/CalciumRunTime/Temp/";
 
 //END
 int TransCheckAPI = 0;
@@ -82,4 +82,6 @@ const string cfgfile = GetFilePath() + "/Calcium~Config.cfg";
 
 string cfg_autoupdate;
 string cfg_defaultrun="notset";
+string cfg_usingserver = "https://calciumservices.foxaxu.com/ExtendAPI/";
 int cfg_maxusing = 0;
+
