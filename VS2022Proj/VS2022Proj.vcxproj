@@ -141,12 +141,16 @@
     <ClInclude Include="..\CPP\TextProces.h" />
     <ClInclude Include="..\CPP\VarSpace.h" />
     <ClInclude Include="..\CPP\Verinfo.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CPP\Calcium.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\CPP\ReadMe.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\LOGO.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
