@@ -60,3 +60,32 @@ bool boxmkdir(string dir) {
 		return false;
 	}
 }
+
+int getdocmax(string file) {
+	int maxread = 1;
+    BackCheckRUN:
+	string ReadNULLCheck = LineReader(file, maxread);
+	if (ReadNULLCheck == "overline") {
+		maxread--;
+		return maxread;
+	}
+	maxread++;
+	goto BackCheckRUN;
+}
+
+void typetext(string file) {
+	if (check_file_existence(file)) {
+		int maxdocsize = getdocmax(file);
+
+		maxdocsize++;
+
+		for (int startRoll = 1; maxdocsize != startRoll; startRoll++) {
+			cout << LineReader(file, startRoll) << endl;
+		}
+		return;
+	}
+	else {
+		cout << "ERROR FILE NOT EXIST : " << file << endl;
+		return;
+	}
+}

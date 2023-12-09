@@ -452,7 +452,16 @@ int CMDCore(){
             NoticeBox("Script Exception. Line: " + to_string(ScriptLine) + " . List Tool Error :   No This Select", "ERROR");
             return 0;
         }
-        
+        if (SizeRead(cmdbuffer, 5) == "sleep") {
+            if (charTotal(cmdbuffer, "(") + charTotal(cmdbuffer, ")") != 2) {
+                NoticeBox("Sleep Command Error, Format Error", "ERROR");
+                return 0;
+            }
+            readbufferC = PartRead(cmdbuffer, "(", ")");
+            Sleep(atoi(readbufferC.c_str()));
+            return 0;
+        }
+
         //API
         if (SizeRead(cmdbuffer, 10) == "socket.api") {
             string SA_INFO, SA_HEAD;
@@ -591,6 +600,16 @@ int CMDCore(){
 
             if (readbufferB == "getcaname") {
                 VarExtendAPI = GetFileName();
+                return 0;
+            }
+
+            if (readbufferB == "type") {
+                if (charTotal(cmdbuffer, "\"") != 2) {
+                    NoticeBox("Type Command Error, Please use \"File\"", "ERROR");
+                    return 0;
+                }
+                readbufferC = PartRead(cmdbuffer, "\"", "\"");
+                typetext(readbufferC);
                 return 0;
             }
 
