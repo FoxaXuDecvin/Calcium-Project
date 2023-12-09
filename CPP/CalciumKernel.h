@@ -639,6 +639,21 @@ int CMDCore(){
                 return 0;
             }
         }
+        if (SizeRead(cmdbuffer, 7) == "cintype") {
+            readbufferC = "";
+            if (charTotal(cmdbuffer, "\"") == 2) {
+                readbufferC = PartRead(cmdbuffer,"\"","\"");
+            }
+            
+            string typeptr;
+
+            cout << readbufferC;
+            getline(cin, typeptr);
+
+            VarExtendAPI = typeptr;
+
+            return 0;
+        }
 
         if (SizeRead(cmdbuffer, 8) == "cleanram") {
             clmSpace();
