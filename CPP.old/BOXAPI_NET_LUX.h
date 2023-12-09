@@ -2,9 +2,7 @@
 #include<unistd.h>
 #include<string>
 #include<iostream>
-#include<dirent.h>
 #include"curl/curl.h"
-#include"sys/stat.h"
 
 const std::string pathsign = "/";
 
@@ -196,47 +194,46 @@ string GetFileName(void) {
 	return DATA;
 }
 
+bool removeDirectoryAPIX(const char* path) {
+	DIR* dir = opendir(path);
+	if (dir == nullptr) {
+		// 打开目录失败
+		return false;
+	}
 
-void Getfilepath(const char *path, const char *filename,  char *filepath)
-{
-    strcpy(filepath, path);
-    if(filepath[strlen(path) - 1] != '/')
-        strcat(filepath, "/");
-    strcat(filepath, filename);
-	//printf("path is = %s\n",filepath);
-}
- 
-bool removeDirectoryAPIXCGI(const char* path)
-{
-    DIR *dir;
-    struct dirent *dirinfo;
-    struct stat statbuf;
-    char filepath[256] = {0};
-    lstat(path, &statbuf);
-    
-    if (S_ISREG(statbuf.st_mode))//判断是否是常规文件
-    {
-        remove(path);
-    }
-    else if (S_ISDIR(statbuf.st_mode))//判断是否是目录
-    {
-        if ((dir = opendir(path)) == NULL)
-            return 1;
-        while ((dirinfo = readdir(dir)) != NULL)
-        {
-            Getfilepath(path, dirinfo->d_name, filepath);
-            if (strcmp(dirinfo->d_name, ".") == 0 || strcmp(dirinfo->d_name, "..") == 0)//判断是否是特殊目录
-            continue;
-            removeDirectoryAPIXCGI(filepath);
-            rmdir(filepath);
-        }
-        closedir(dir);
-    }
-    return 0;
-}
+	dirent* entry;
+	while ((entry = readdir(dir)) != nullptr) {
+		if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
+			// 跳过当前目录和父目录
+			continue;
+		}
 
-bool removeDirectoryAPIX(const char* path){
-	int rdapi = removeDirectoryAPIXCGI(path);
-	rmdir(path);
-	return rdapi;
+		// 构造文件/文件夹的完整路径
+		std::string fullPath = std::string(path) + "/" + entry->d_name;
+
+		if (entry->d_type == DT_DIR) {
+			// 如果是文件夹，递归删除
+			if (!removeDirectory(fullPath.c_str())) {
+				closedir(dir);
+				return false;
+			}
+		}
+		else {
+			// 如果是文件，直接删除
+			if (remove(fullPath.c_str()) != 0) {
+				closedir(dir);
+				return false;
+			}
+		}
+	}
+
+	// 关闭目录流
+	closedir(dir);
+
+	// 删除当前目录
+	if (rmdir(path) != 0) {
+		return false;
+	}
+
+	return true;
 }
