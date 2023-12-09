@@ -131,7 +131,7 @@ string ReplaceCharN(string info, string replaceword, string nword) {
 //0-FAILED
 //1-TRUE
 int URLDown(string URL, string Save) {
-	Save = ReplaceCharN(Save,"/","\\");
+	Save = ReplaceCharN(Save,"\\","/");
 
 	dl_curl_get_req(URL, Save);
 	if (check_file_existenceA) {

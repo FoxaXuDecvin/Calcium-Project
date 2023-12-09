@@ -54,7 +54,8 @@ int StartExtend(string Head) {
         readbufferB = GetURLCode(cfg_usingserver + readbufferA);
 
         if (readbufferB != "URLError.FailedGet") {
-            if (URLDown(readbufferB, UsingPath + readbufferA)) {
+            string ReplaceUP = ReplaceChar(UsingPath, "\\", "/");
+            if (URLDown(readbufferB, ReplaceUP + readbufferA)) {
                 return 1;
             }
             else {
