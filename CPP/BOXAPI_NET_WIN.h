@@ -7,6 +7,11 @@
 #include <vector>
 //Design For Windows
 const std::string pathsign = "\\";
+string RunPlatfom = "Windows (MSVC 64Bit)";//Must Include Windows/Linux one
+
+void cleanConsole() {
+	system("cls");
+}
 
 void foldercreateapi(string dir) {
 	mkdir(dir.c_str());

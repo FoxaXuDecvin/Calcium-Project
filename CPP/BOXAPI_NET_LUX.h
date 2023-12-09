@@ -7,6 +7,11 @@
 #include"sys/stat.h"
 
 const std::string pathsign = "/";
+string RunPlatfom = "Linux (GCC 64Bit)";//Must Include Windows/Linux one
+
+void cleanConsole() {
+	system("clear");
+}
 
 void foldercreateapi(string dir) {
 	mkdir(dir.c_str(),0755);

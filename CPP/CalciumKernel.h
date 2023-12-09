@@ -275,6 +275,10 @@ int CMDCore(){
             cout << readbuffer << endl;
             return 0;
         }
+        if (SizeRead(cmdbuffer, 8) == "clearcon") {
+            cleanConsole();
+            return 0;
+        }
         if (SizeRead(cmdbuffer,6)=="system"){
             //Win/Linux Console Command
             if (charTotal(cmdbuffer,"\"") != 2){
@@ -675,6 +679,29 @@ int CMDCore(){
 
 
         }
+        if (SizeRead(cmdbuffer, 9) == "runscript") {
+            if (charTotal(cmdbuffer, "\"") != 2) {
+                cout << "RunScript Format Error " << endl;
+                return -1;
+            }
+            string NewRunScript = PartRead(cmdbuffer, "\"", "\"");
+            if (!check_file_existence(NewRunScript)) {
+                cout << "Failed to Load Script :  " << NewRunScript << endl;
+                return -1;
+            }
+            int a = rollscript(NewRunScript);
+            if (a == 1001) {
+                //Return UnknownError
+                NoticeBox("File Return Error", "ERROR");
+            }
+            if (a == 1002) {
+                //Return FileDestroy
+                NoticeBox("Run Error\n Read Failed :  This File is Destroy.\nInclude File : _" + NewRunScript + "_", "ERROR");
+            }
+
+            return -1;
+        }
+
         //Include
 
         if (SizeRead(cmdbuffer,6)=="#using"){

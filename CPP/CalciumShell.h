@@ -17,10 +17,10 @@ void OpenCaShell(){
     cout << endl;
     cout << "Calcium Shell console. Platfom :  " << RunPlatfom <<endl;
     cout << "Calcium version :  " << CodeName << " " << Str_VerCode << "." << endl;
-    cout << "Version Code:     " << VerNotice << endl;
-    cout << "File Path :  " << GetFilePath() << endl;
-    cout << "Run Path :  " << SocketAPI_GETPATH() << endl;
-    cout << "Using Config :  " << cfgfile << endl;
+    //cout << "Version Code:     " << VerNotice << endl;
+    //cout << "File Path :  " << GetFilePath() << endl;
+    //cout << "Run Path :  " << SocketAPI_GETPATH() << endl;
+    //cout << "Using Config :  " << cfgfile << endl;
     cout << "Copyright FoxaXu Software@. " << YearInfo << endl;
     cout << "Command :  \"help\" to get more info. or use \"endscript\" to exit" <<endl;
     cout << "Github :  https://github.com/FoxaXuDecvin/Calcium-Project" << endl;
