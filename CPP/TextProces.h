@@ -548,6 +548,20 @@ string GetURLCode(string URL) {
 }
 
 void loadcfg(void) {
+	bool ExistFolder_check(string dir);
+	bool boxmkdir(string dir);
+
+	//DEFIND
+	if (!ExistFolder_check(RunTime)) {
+		boxmkdir(RunTime);
+	}
+	if (!ExistFolder_check(UsingPath)) {
+		boxmkdir(UsingPath);
+	}
+	if (!ExistFolder_check(RunTemp)) {
+		boxmkdir(RunTemp);
+	}
+
 	//cout << "Load Config" << endl;
 RELOADLCFG:
 	int readptr = 1;
@@ -573,6 +587,10 @@ RELOADLCFG:
 				cfg_maxerror = atoi(PartRead(tempptr, "=", ";").c_str());
 				continue;
 			}
+			if (readbufferA == "settings.defaultrun") {
+				cfg_defaultrun = PartRead(tempptr, "=", ";");
+				continue;
+			}
 
 			if (tempptr == "")break;
 			cout << "Load Config Error :  Unknown Config :  _" << tempptr << "_" << endl;
@@ -590,6 +608,7 @@ RELOADLCFG:
 		CreateConfig << "Calcium Config. Create Version -> " << Str_VerCode << endl;
 		CreateConfig << "$settings.autoupdate=true;//AutoUpdate" << endl;
 		CreateConfig << "$settings.maxerror=64;//AutoUpdate" << endl;
+		CreateConfig << "$settings.defaultrun=notset;//AutoUpdate" << endl;
 		CreateConfig.close();
 		goto RELOADLCFG;
 	}

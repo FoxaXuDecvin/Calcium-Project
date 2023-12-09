@@ -45,3 +45,18 @@ bool boxrmdir(string dir) {
 		return true;
 	}
 }
+
+bool boxmkdir(string dir) {
+	dir = ReplaceChar(dir, "\\", "/");
+
+	mkdir(dir.c_str());
+
+	//cout << "Remove Directory :  " << dir << endl;
+
+	if (ExistFolder_check(dir)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}

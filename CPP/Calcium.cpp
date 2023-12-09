@@ -6,6 +6,16 @@ using namespace std;
 int main(int argc,char* argv[]){
     loadcfg();
     if(argc == 1){
+        if (cfg_defaultrun != "notset") {
+            if (check_file_existence(cfg_defaultrun)) {
+                RunScript = cfg_defaultrun;
+                goto SKIPRUNALL;
+            }
+            else {
+                cout << "Failed to Load Default Script" << endl;
+                cout << "seems file not exist :  " << cfg_defaultrun << endl;
+            }
+        }
         OpenCaShell();
         cout << endl;
         return ReturnDATA;
@@ -58,6 +68,7 @@ int main(int argc,char* argv[]){
         return 0;
     }
 
+    SKIPRUNALL:
     if (RunScript == "NOSET"){
         cout << "Use \"-cascript/-ca <file>\" Run Script" << endl;
         return 0;

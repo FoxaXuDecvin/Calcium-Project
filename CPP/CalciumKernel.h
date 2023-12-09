@@ -535,6 +535,25 @@ int CMDCore(){
                 return 0;
             }
 
+            if (readbufferB == "folder.make") {
+                if (charTotal(cmdbuffer, "\"") != 2) {
+                    NoticeBox("Folder API Error. Format Error Using \"DIR\" ", "ERROR");
+                    return 0;
+                }
+
+                readbufferC = PartRead(cmdbuffer, "\"", "\"");
+
+                bool BACKDELAPI = boxmkdir(readbufferC);
+                if (BACKDELAPI) {
+                    VarExtendAPI = "true";
+                }
+                else {
+                    VarExtendAPI = "false";
+                }
+
+                return 0;
+            }
+
             if (readbufferB == "getcaname") {
                 VarExtendAPI = GetFileName();
                 return 0;
@@ -627,25 +646,37 @@ int CMDCore(){
         }
         //Include
 
-        if (SizeRead(cmdbuffer,8)=="#using"){
-            readbufferA = PartRead(cmdbuffer,"\"","\"");
-            readbufferA = ReplaceChar(readbufferA,"\";","");
-
-            if(check_file_existence(readbufferA)){}
+        if (SizeRead(cmdbuffer,6)=="#using"){
+            string UsingFile;
+            if (charTotal(cmdbuffer, "\"") == 2) {
+                UsingFile = PartRead(cmdbuffer, "\"", "\"");
+            }
             else {
-                NoticeBox("Failed to Using :  _" + readbufferA + "_.\n" + "Please Check is file exist", "ERROR");
+                if (charTotal(cmdbuffer, "<") + charTotal(cmdbuffer, ">") == 2) {
+                    UsingFile = PartRead(cmdbuffer, "<", ">");
+                    UsingFile = UsingPath + "/" + UsingFile;
+                }
+                else {
+                    NoticeBox("Failed to Using Command. Null File Mark", "ERROR");
+                    return 0;
+                }
+            }
+
+            if(check_file_existence(UsingFile)){}
+            else {
+                NoticeBox("Failed to Using :  _" + UsingFile + "_.\n" + "Please Check is file exist", "ERROR");
                 return 0;
             }
 
             while(true){
-                int a = rollscript(readbufferA);
+                int a = rollscript(UsingFile);
                 if (a == 1001){
                     //Return UnknownError
                     NoticeBox("Using File Return Error","ERROR");
                 }
                 if (a == 1002){
                     //Return FileDestroy
-                    NoticeBox("Using Run Error\n Read Failed :  This File is Destroy.\nInclude File : _" + readbufferA + "_", "ERROR");
+                    NoticeBox("Using Run Error\n Read Failed :  This File is Destroy.\nInclude File : _" + UsingFile + "_", "ERROR");
                 }
                 break;
             }
