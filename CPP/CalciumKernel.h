@@ -55,7 +55,16 @@ int StartExtend(string Head) {
 
         if (readbufferB != "URLError.FailedGet") {
             string ReplaceUP = ReplaceChar(UsingPath, "\\", "/");
-            if (URLDown(readbufferB, ReplaceUP + readbufferA)) {
+            URLDown(readbufferB, ReplaceUP + readbufferA);
+            readbufferC = LineReader(ReplaceUP + readbufferA,2);
+
+            if(readbufferC == "overline"){
+                readbufferCMDVAR = ReplaceUP + readbufferA;
+                remove(readbufferCMDVAR.c_str());
+                return 0;
+            }
+
+            if (check_file_existence(ReplaceUP + readbufferA)) {
                 return 1;
             }
             else {
