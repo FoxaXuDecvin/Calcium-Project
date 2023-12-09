@@ -458,7 +458,7 @@ int CMDCore(){
                 return 0;
             }
             readbufferC = PartRead(cmdbuffer, "(", ")");
-            Sleep(atoi(readbufferC.c_str()));
+            sleepapi(atoi(readbufferC.c_str()));
             return 0;
         }
 

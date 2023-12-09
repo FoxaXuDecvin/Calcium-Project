@@ -9,6 +9,14 @@
 const std::string pathsign = "\\";
 string RunPlatfom = "Windows (MSVC 64Bit)";//Must Include Windows/Linux one
 
+//Linux s   Windows  ms
+//Default Use s
+void sleepapi(int num) {
+	int cutth = num * 1000;
+	Sleep(cutth);
+	return;
+}
+
 void cleanConsole() {
 	system("cls");
 }

@@ -9,6 +9,12 @@
 const std::string pathsign = "/";
 string RunPlatfom = "Linux (GCC 64Bit)";//Must Include Windows/Linux one
 
+//Linux s   Windows  ms
+void sleepapi(int num) {
+	sleep(num);
+	return;
+}
+
 void cleanConsole() {
 	system("clear");
 }
