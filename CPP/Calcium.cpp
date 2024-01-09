@@ -104,7 +104,6 @@ SKIPRUNALL:
         cout << "optimal Mode" << endl;
         cout << "File :  " << RunScript << endl;
         cout << "Out :  " << outopfile << endl;
-        cout << "Using Server :  " << cfg_autoupdate << endl;
         sleepapi(1);
         cout << endl;
 
