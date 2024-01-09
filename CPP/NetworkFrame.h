@@ -24,3 +24,28 @@ string checkupdate() {
 		return readbufferA;
 	}
 }
+
+bool optscript(string file,string outfile) {
+	if (check_file_existence(file)) {}
+	else {
+		return false;
+	}
+	
+	ofstream optfiles;
+	optfiles.open(outfile);
+
+	readbufferC = "";
+	for (int lr=1; readbufferC != "overline";lr++) {
+
+		if (readbufferC != "") {
+			optfiles << readbufferC <<endl;
+		}
+
+		readbufferC = LineReader_noerror(file,lr);
+		readbufferC = HeadSpaceClean(readbufferC);
+	}
+
+	optfiles.close();
+
+	return true;
+}

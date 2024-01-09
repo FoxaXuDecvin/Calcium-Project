@@ -1,6 +1,6 @@
 #pragma once
-#include"TextProces.h"
-#include"CASK.h"
+
+#include"CMD.h"
 
 int CMDCore();
 

@@ -58,6 +58,11 @@ int main(int argc,char* argv[]){
             NoticeBoxMode = 0;
             break;
         }
+        if (readbuffer == "-opt") {
+            fileswitch = 1;
+            optmode = 1;
+            continue;
+        }
         cout << "Unknown Parameter :  " << readbuffer << endl;
     }
 
@@ -68,7 +73,52 @@ int main(int argc,char* argv[]){
         return 0;
     }
 
-    SKIPRUNALL:
+SKIPRUNALL:
+    if (optmode == 1) {
+        if (check_file_existence(RunScript)) {}
+        else {
+            cout << "Cannot Find :  " << RunScript << endl;
+            cout << "Check your type and try again" << endl;
+            return 0;
+        }
+
+        string outopfile = RunScript;
+
+        string tempdata,outbuffer;
+        int numbuffer = outopfile.size();
+        int baseNum = -1;
+
+        while (true) {
+            tempdata = outopfile[numbuffer];
+            if (tempdata == ".") break;
+            numbuffer--;
+        }
+        numbuffer--;
+        while (baseNum != numbuffer) {
+            baseNum++;
+            outbuffer = outbuffer + outopfile[baseNum];
+        };
+
+        outopfile = outbuffer + cfg_optadd;
+
+        cout << "optimal Mode" << endl;
+        cout << "File :  " << RunScript << endl;
+        cout << "Out :  " << outopfile << endl;
+        cout << "Using Server :  " << cfg_autoupdate << endl;
+        sleepapi(1);
+        cout << endl;
+
+        if (optscript(RunScript, outopfile)) {
+            cout << "File Successfully to Optimal. Save on " << outopfile << endl;
+            return 0;
+        }
+        else {
+            cout << "Failed to Optimal. File " << RunScript << endl;
+            return 0;
+        }
+
+    }
+
     if (RunScript == "NOSET"){
         cout << "Use \"-cascript/-ca <file>\" Run Script" << endl;
         return 0;

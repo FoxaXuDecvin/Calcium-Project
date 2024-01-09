@@ -300,6 +300,38 @@ string LineReader(string File, int line_number) {
 	return temp;
 }
 
+//NoError
+string LineReader_noerror(string File, int line_number) {
+	if (check_file_existence(File)) {}
+	else {
+		return "FileNotExist";
+	}
+	int lines, i = 0;
+	string temp;
+	fstream file;
+	file.open(File.c_str());
+	lines = CountLines(File);
+
+	if (line_number <= 0)
+	{
+		return "LineError";
+	}
+	if (file.fail())
+	{
+		return "ReadFailed";
+	}
+	if (line_number > lines)
+	{
+		return "overline";
+	}
+	while (getline(file, temp) && i < line_number - 1)
+	{
+		i++;
+	}
+	file.close();
+	return temp;
+}
+
 //1 TRUE
 //0 FALSE
 int checkChar(string text,string chechchar ) {
@@ -359,6 +391,9 @@ NextRollCR:
 
 string HeadSpaceClean(string Info) {
 	int maxCSize = Info.size();
+	if (maxCSize == -1) {
+		return "";
+	}
 	string readMCS, tempInfo;
 	int currentFit;
 
@@ -599,6 +634,10 @@ RELOADLCFG:
 				cfg_usingserver = PartRead(tempptr, "=", ";");
 				continue;
 			}
+			if (readbufferA == "settings.optadd") {
+				cfg_optadd = PartRead(tempptr, "=", ";");
+				continue;
+			}
 
 			if (tempptr == "")break;
 			cout << "Load Config Error :  Unknown Config :  _" << tempptr << "_" << endl;
@@ -619,6 +658,7 @@ RELOADLCFG:
 		CreateConfig << "$settings.maxusing=64;//Max Allow using File. Using -1 to Close" << endl;
 		CreateConfig << "$settings.usingserver=https://calciumservices.foxaxu.com/ExtendAPI/;//Max Allow using File. Using -1 to Close" << endl;
 		CreateConfig << "$settings.defaultrun=notset;//Auto Run Script When Calcium Run" << endl;
+		CreateConfig << "$settings.optadd=~optimal.ca;//Auto Run Script When Calcium Run" << endl;
 		
 		CreateConfig.close();
 		goto RELOADLCFG;
@@ -633,6 +673,9 @@ string getendchar(string infos) {
 
 string cutendchar(string infos) {
 	numbuffer = infos.size();
+	if (numbuffer == 0) {
+		return "FAILED";
+	}
 	numbuffer--;
 	readbuffer = "";
 	for (int rptr = 0; rptr != numbuffer; rptr++) {

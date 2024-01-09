@@ -66,7 +66,7 @@ int NowTao = 0;
 string readbufferC, readbufferD, tempInfo;
 
 //Text
-string YearInfo = "2022-2023";
+string YearInfo = "2022-2024";
 
 void clmSpace(void) {
 	readbuffer = readbufferA = readbufferB = readbufferCMDVAR = "";
@@ -83,5 +83,7 @@ const string cfgfile = GetFilePath() + "/Calcium~Config.cfg";
 string cfg_autoupdate;
 string cfg_defaultrun="notset";
 string cfg_usingserver = "https://calciumservices.foxaxu.com/ExtendAPI/";
+string cfg_optadd = ".optca";
 int cfg_maxusing = 0;
+int optmode = 0;
 

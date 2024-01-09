@@ -127,14 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ResourceCompile Include="VS2022Proj.rc" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="..\CPP\BOXAPI_NET_LUX.h" />
     <ClInclude Include="..\CPP\BOXAPI_NET_WIN.h" />
     <ClInclude Include="..\CPP\CalciumKernel.h" />
     <ClInclude Include="..\CPP\CalciumShell.h" />
     <ClInclude Include="..\CPP\CASK.h" />
+    <ClInclude Include="..\CPP\CMD.h" />
     <ClInclude Include="..\CPP\Includer.h" />
     <ClInclude Include="..\CPP\NetworkFrame.h" />
     <ClInclude Include="..\CPP\StringSpace.h" />
@@ -142,12 +140,16 @@
     <ClInclude Include="..\CPP\VarSpace.h" />
     <ClInclude Include="..\CPP\Verinfo.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CPP\Calcium.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\CPP\ReadMe.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="VS2022Proj.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\LOGO.ico" />
