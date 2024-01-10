@@ -9,7 +9,7 @@ string VersionCode = "Spark-Core";
 string CodeName = "SparkCore_Dev_Function";
 string VerNotice = "SparkCore";
 
-int VerCode = 4108;
+int VerCode = 4109;
 
 string Str_VerCode = to_string(VerCode);
 

@@ -697,3 +697,9 @@ bool createmark(string File, string info) {
 		return false;
 	}
 }
+
+void autopause(void) {
+	cout << "Press Enter key to Next ...  ";
+	getchar();
+	return;
+}

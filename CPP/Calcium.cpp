@@ -54,6 +54,20 @@ int main(int argc,char* argv[]){
             afterRollExit = 1;
             break;
         }
+        if (readbuffer == "-osreg") {
+            sysreg_fun();
+            afterRollExit = 1;
+            break;
+        }
+        if (readbuffer == "-osunreg") {
+            sysunreg_fun();
+            afterRollExit = 1;
+            break;
+        }
+        if (readbuffer == "-debug") {
+            scriptdebugmode = 1;
+            break;
+        }
         if (readbuffer == "-offnb") {
             NoticeBoxMode = 0;
             break;

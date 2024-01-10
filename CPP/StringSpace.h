@@ -61,6 +61,8 @@ int numbufferC, PartSizeA;
 
 int shellmode = 0;
 
+int scriptdebugmode = 0;
+
 int NowTao = 0;
 
 string readbufferC, readbufferD, tempInfo;

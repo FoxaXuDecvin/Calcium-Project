@@ -255,3 +255,13 @@ bool removeDirectoryAPIX(const char* path){
 	rmdir(path);
 	return rdapi;
 }
+
+void sysreg_fun(void) {
+	cout << "This Function cannot running on Linux" << endl;
+	return;
+}
+
+void sysunreg_fun() {
+	cout << "This Function cannot running on Linux" << endl;
+	return;
+}

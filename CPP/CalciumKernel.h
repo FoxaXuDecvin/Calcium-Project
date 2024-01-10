@@ -17,6 +17,14 @@ int rollscript(string RollFile){
         cmdbuffer = LineReader(RollFile,ScriptLine);
         if(cmdbuffer == "ReadFailed"){
             cout << "Text Engine Read Failed :  File _" << RollFile << "_" <<endl;
+            if (scriptdebugmode == 1) {
+                cout << endl;
+                cout << "+++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+                cout << "Script Run END" << endl;
+                cout << "File :  " << RollFile << endl;
+                cout << "Run End Line : " << ScriptLine << endl;
+                autopause();
+            }
             return 1002;
         }
         cmdbuffer = HeadSpaceClean(cmdbuffer);
@@ -31,6 +39,14 @@ int rollscript(string RollFile){
          }
 
         if (cmdbuffer == "overline"){
+            if (scriptdebugmode == 1) {
+                cout << endl;
+                cout << "+++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+                cout << "Script Run END" << endl;
+                cout << "File :  " << RollFile << endl;
+                cout << "Run End Line : " << ScriptLine << endl;
+                autopause();
+            }
             return 1000;
         }      
         //& is VarMark
@@ -39,6 +55,14 @@ int rollscript(string RollFile){
         RunScript = RollFile;
 
         if (sizebuffer == -1) {
+            if (scriptdebugmode == 1) {
+                cout << endl;
+                cout << "+++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+                cout << "Script Run END" << endl;
+                cout << "File :  " << RollFile << endl;
+                cout << "Run End Line : " << ScriptLine << endl;
+                autopause();
+            }
             return 1000;
         }
     }

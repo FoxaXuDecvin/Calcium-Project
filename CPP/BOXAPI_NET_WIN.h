@@ -5,6 +5,7 @@
 #include <io.h>
 #include <string>
 #include <vector>
+#include<ShlObj.h>
 //Design For Windows
 const std::string pathsign = "\\";
 string RunPlatfom = "Windows (MSVC 64Bit)";//Must Include Windows/Linux one
@@ -145,5 +146,82 @@ void removeDirectoryAPIX(string dir) {
 	_findclose(handle);
 
 	rmdir(dir.c_str());
+	return;
+}
+
+//WINAPI
+int testAdminA() {
+	BOOL ISADM = IsUserAnAdmin();
+	if (ISADM) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
+void sysreg_fun(void) {
+	readbufferC = GetFileName();
+	int TSAREG = testAdminA();
+	if (TSAREG == 1) {
+		cout << "Calcium Register" << endl;
+		system("reg add HKEY_CLASSES_ROOT\\CalciumScript /ve /t REG_SZ /d \"Calcium Run Script\" /f");
+		system("reg add HKEY_CLASSES_ROOT\\CalciumScript\\shell /ve /t REG_SZ /d  \"open\" /f");
+
+		//Reg Open
+		system("reg add HKEY_CLASSES_ROOT\\CalciumScript\\shell\\open /f");
+		
+		readbuffer = "reg add HKEY_CLASSES_ROOT\\CalciumScript\\shell\\open\\command /ve /t REG_SZ /f /d \"" + readbufferC + " -ca \\\"%1\\\"\"";
+		system(readbuffer.c_str());
+
+		//Reg Runas
+		system("reg add HKEY_CLASSES_ROOT\\CalciumScript\\shell\\runas /f");
+		
+		readbuffer = "reg add HKEY_CLASSES_ROOT\\CalciumScript\\shell\\runas\\command /ve /t REG_SZ /f /d \"" + readbufferC + " -ca \\\"%1\\\"\"";
+		system(readbuffer.c_str());
+
+		//Reg Debug
+		system("reg add HKEY_CLASSES_ROOT\\CalciumScript\\shell\\Debug /f");
+
+		readbuffer = "reg add HKEY_CLASSES_ROOT\\CalciumScript\\shell\\Debug\\command /ve /t REG_SZ /f /d \"" + readbufferC + " -ca \\\"%1\\\" -debug\"";
+		system(readbuffer.c_str());
+
+		//EDIT
+		system("reg add HKEY_CLASSES_ROOT\\CalciumScript\\shell\\edit /f");
+		system("reg add HKEY_CLASSES_ROOT\\CalciumScript\\shell\\edit\\command /ve /t REG_SZ /f /d \"Notepad.exe \\\"%1\\\"\"");
+
+		system("reg add HKEY_CLASSES_ROOT\\.ca /ve /t REG_SZ /d  \"CalciumScript \" /f");
+		system("reg add HKEY_CLASSES_ROOT\\.cascript /ve /t REG_SZ /d  \"CalciumScript \" /f");
+		system("reg add HKEY_CLASSES_ROOT\\.casp /ve /t REG_SZ /d  \"CalciumScript \" /f");
+		system("reg add HKEY_CLASSES_ROOT\\.capt /ve /t REG_SZ /d  \"CalciumPackage \" /f");
+
+		system("assoc .ca=CalciumScript");
+		system("assoc .cascript=CalciumScript");
+		cout << "Complete" << endl;
+		return;
+	}
+	cout << "Failed. Please use Administrator" <<endl;
+	return;
+}
+
+void sysunreg_fun() {
+	int TSAREG = testAdminA();
+	if (TSAREG == 1) {
+		cout << "Calcium UnRegister" << endl;
+		cout << "Delete Register" << endl;
+		system("reg delete HKEY_CLASSES_ROOT\\CalciumScript /f");
+		system("reg delete HKEY_CLASSES_ROOT\\CalciumPackage /f");
+		system("reg delete HKEY_CLASSES_ROOT\\.ca /f");
+		system("reg delete HKEY_CLASSES_ROOT\\.cascript /f");
+		system("reg delete HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\.ca /f");
+		system("reg delete HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\.cascript /f");
+		system("reg delete HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.ca /f");
+		system("reg delete HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.cascript /f");
+		//É¾³ýCAC
+
+		cout << "Complete" << endl;
+		return;
+	}
+	cout << "Failed. Please use Administrator" << endl;
 	return;
 }

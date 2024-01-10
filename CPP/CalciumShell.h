@@ -15,6 +15,7 @@ void OpenCaShell(){
     cout << "Calcium Shell Loading... " << endl;
     readbufferA = checkupdate();
     cout << endl;
+    cleanConsole();
     cout << "Calcium Shell console. Platfom :  " << RunPlatfom <<endl;
     cout << "Calcium version :  " << CodeName << " " << Str_VerCode << "." << endl;
     //cout << "Version Code:     " << VerNotice << endl;
@@ -79,6 +80,12 @@ void OpenCaShell(){
         cout << "You can use \"endscript\" to Close this Program" << endl;
         goto BackShell;
     }
+    if (usertypebuffer == "listpath") {
+        cout << endl;
+        cout << "File Path :  " << GetFilePath() << endl;
+        cout << "Run Path :  " << SocketAPI_GETPATH() << endl;
+        goto BackShell;
+    }
     if (usertypebuffer == "help.eula"){
         cout << endl;
         cout << "https://calcium.foxaxu.com/eula" <<endl;
@@ -96,6 +103,15 @@ void OpenCaShell(){
         readbuffer = "\"1\"\"2\"\"3\"\"4\"";
         readbufferA = PartReadA(readbuffer, "\"", "\"", 1);
         cout << readbufferA << endl;
+        goto BackShell;
+    }
+
+    if (usertypebuffer == "-osreg") {
+        sysreg_fun();
+        goto BackShell;
+    }
+    if (usertypebuffer == "-osunreg") {
+        sysunreg_fun();
         goto BackShell;
     }
 
